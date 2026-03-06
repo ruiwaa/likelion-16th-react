@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App.tsx";
+import "./styles/main.css";
+import App from "./app/App";
 
 // 방어적 프로그래밍
 const rootElement = document.getElementById("root");
