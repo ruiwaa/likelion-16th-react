@@ -1,5 +1,6 @@
-import "./App.css";
+import styles from './App.module.css'
 
+console.log(styles);
 
 
 
@@ -24,7 +25,7 @@ function App() {
   //JSX (javaScript )
   return (
     < >
-      <header className="header">
+      <header className={styles.header}>
         <h1>
           <dfn>
             <abbr title="JavaScript eXtension">JSX</abbr>
@@ -32,7 +33,7 @@ function App() {
           기초 배우기
         </h1>
       </header>
-      <main className="main">
+      <main className={styles.main}>
         <section>
           <h2>모든 태그는 반드시 닫혀야 합니다.</h2>
           <p>
@@ -47,7 +48,7 @@ function App() {
           <h2>
             <abbr>HTML</abbr>이 아닙니다.
           </h2>
-          <div className="filed">
+          <div className= {styles.field}>
             <label htmlFor="username">이름</label>
             <input type="text" id="username" className="input" placeholder="이름을 입력하세요"/>
           </div>
@@ -60,11 +61,11 @@ function App() {
         {/* <div onClick={() => alert('hello')}>모든 사용자 고려</div> */}
 
         {/* 좋은 코드 */}
-        <button type="button" onClick={() => alert('모든 사용자가 접근이 가능한 요소입니다.')}> 모든 사용자 고려 🙆‍♀️</button>
+        <button className={styles.button} type="button" onClick={() => alert('모든 사용자가 접근이 가능한 요소입니다.')}> 모든 사용자 고려 🙆‍♀️</button>
 
         </section>
       </main>
-      <footer className="footer">
+      <footer className={styles.footer}>
         <small>
           COPYRIGHT RESERVED. © <abbr title="이듬(EUID)">EUID</abbr>. "완벽보단 완주를!"
         </small>
