@@ -1,6 +1,13 @@
 import S from './style.module.css'
 
-function Section() {
+interface SectionProps {
+  title: string
+  isShowTitle?:boolean
+  children?: React.ReactNode
+
+}
+
+function Section(props:SectionProps) {
   /**
    * 컴포넌트 title, children 속성
    * - 컴포넌트 타입 정의 (인라인 → 인터페이스)
@@ -10,7 +17,8 @@ function Section() {
    */
   return (
     <section className={S.container}>
-      <h1 className="sr-only">리액트 학습</h1>
+      <h1 className={props.isShowTitle ? undefined : 'sr-only'} >{props.title}</h1>
+     {props.children}
     </section>
   )
 }
