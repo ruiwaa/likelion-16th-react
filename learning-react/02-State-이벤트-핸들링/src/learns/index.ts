@@ -5,6 +5,7 @@
 // 1. 조건부 렌더링 : learn/ConditionalRendering
 export { default as ConditionalRendering } from './ConditionalRendering'
 // 2. State 기초 : learn/ComponentState
+export { default as ComponentState } from './ComponentState'
 // 3. 이벤트 핸들링 : learn/EventHandling
 // 4. State 업데이트 : learn/UpdateState
 // 5. 입력 동기화 : learn/ControlledComponent

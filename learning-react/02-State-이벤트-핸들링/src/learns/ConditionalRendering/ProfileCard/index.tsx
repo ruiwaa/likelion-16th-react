@@ -16,16 +16,27 @@ interface ProfileCardProps{
 }
 function ProfileCard({name, role, isNew = false, isBest = false}: ProfileCardProps) {
  
+
+  // 조건문은 함수 몸체 안에서 사용 가능
+  let newBadge = null
+
+  if(isNew){
+    newBadge = (<span className={`${S.badge} ${S.badgeNew}`} aria-label="신규 입사자">NEW </span>)
+    }
+
+  let bestBadge = null
+    if(isBest){
+      bestBadge = ( <span className={`${S.badge} ${S.badgeBest}`} aria-label="우수 사원">BEST</span>)
+
+    }
+
+
   return (
     <article className={S.card}>
       <header className={S.header}>
         <h3 className={S.name}>{name}</h3>
-        {isNew  && <span className={`${S.badge} ${S.badgeNew}`} aria-label="신규 입사자">
-          NEW
-        </span>}
-        {isBest && <span className={`${S.badge} ${S.badgeBest}`}  aria-label="우수 사원">
-          BEST
-        </span>}
+        {newBadge}
+        {bestBadge}
       </header>
       <p className={S.role}>{role}</p>
     </article>

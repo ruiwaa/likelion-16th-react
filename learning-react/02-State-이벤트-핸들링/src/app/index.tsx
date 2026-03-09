@@ -6,7 +6,7 @@ export default function App() {
   return (
     <div className={S.container}>
       <Header>
-        <h1>내맘대로 헤더!</h1>
+        <h1>컴포넌트 디자인</h1>
       </Header>
       <Wrapper>
       <ConditionalRendering />
