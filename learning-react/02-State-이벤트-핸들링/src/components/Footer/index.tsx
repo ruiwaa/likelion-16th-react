@@ -37,7 +37,7 @@ export default function Footer(props: FooterProps) {
 
   return (
     <footer className={S.footer}>
-      <Wrapper>
+      <Wrapper width={'480'}>
       <small aria-label={copyrightLabel}>
        {currentYear} COPYRIGHT RESERVED. © <abbr title="이듬(EUID)">EUID</abbr>.
        {props.slogan}
