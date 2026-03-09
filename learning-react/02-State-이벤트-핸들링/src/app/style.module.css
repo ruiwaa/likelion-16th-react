@@ -1,7 +1,18 @@
 .container {
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 
   h1{
     color: blue;
+    text-align: center;
+  }
+
+  [data-placeholder] {
+    flex: 1;
+  }
+
+  small{
+    text-align: center;
   }
 }
