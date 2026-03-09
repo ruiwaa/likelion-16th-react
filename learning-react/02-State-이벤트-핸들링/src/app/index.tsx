@@ -1,5 +1,5 @@
-import {Header, Footer} from '@/components'
-import { ComponentState } from '@/learns'
+import { Footer, Header, Wrapper } from '@/components';
+import { EventHandling } from '@/learns';
 import S from "./style.module.css";
 
 export default function App() {
@@ -8,11 +8,11 @@ export default function App() {
       <Header>
         <h1>컴포넌트 디자인</h1>
       </Header>
-      {/* <Wrapper>
-      <ConditionalRendering />
-      </Wrapper> */}
-      {/* <div data-placeholder /> */}
-      <ComponentState/>
+       <Wrapper>
+        <EventHandling/>
+      {/* <ConditionalRendering /> */}
+      {/* <ComponentState/> */}
+      </Wrapper> 
 
       <Footer slogan={"완주 이후엔 스스로 학습이 가능!!!!!"} />
     </div>
