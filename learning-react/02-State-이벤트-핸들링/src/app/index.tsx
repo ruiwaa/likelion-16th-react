@@ -1,5 +1,5 @@
 import { Footer, Header, Wrapper } from '@/components'
-import { ControlledComponent } from '@/learns'
+import { StateIsSnapshot } from '@/learns'
 import S from './style.module.css'
 
 export default function App() {
@@ -13,7 +13,7 @@ export default function App() {
 
       <div className={S.main}>
         <Wrapper>
-          <ControlledComponent />
+          <StateIsSnapshot />
         </Wrapper>
       </div>
 

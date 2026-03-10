@@ -14,3 +14,4 @@ export { default as UpdateState} from './UpdateState'
 // 5. 입력 동기화 : learn/ControlledComponent
 export { default as ControlledComponent } from './ControlledComponent'
 // 6. 스냅샷의 이해 : learn/StateIsSnapshot
+export {default as StateIsSnapshot} from './StateIsSnapshot'

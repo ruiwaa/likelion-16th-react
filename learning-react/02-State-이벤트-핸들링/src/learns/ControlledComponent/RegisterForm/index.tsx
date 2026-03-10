@@ -1,6 +1,7 @@
 import { useState, type ChangeEvent } from 'react'
 import S from './style.module.css'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const REG_EMAIL_CHECK = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
 export default function RegisterForm() {
@@ -17,6 +18,7 @@ export default function RegisterForm() {
   // 폼 데이터를 업데이트 할 수 있는 단 하나의 핸들러 함수 활용
 const handleChangeFormState = (e: ChangeEvent<HTMLInputElement>) => {
   const { name, value } = e.target
+
 
   //set 함수 사용법
   //방법 1 nextState 값으로 설정하기
