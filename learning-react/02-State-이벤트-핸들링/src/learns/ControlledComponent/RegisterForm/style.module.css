@@ -35,6 +35,12 @@
         border-color: transparent;
       }
     }
+
+  .errorMessage {
+  color: #f00;
+  font-size: 14px;
+  font-weight: 500;
+}
   }
 
   .preview {
@@ -46,3 +52,13 @@
     font-size: 0.9rem;
   }
 }
+
+.button {
+    background-color: hsla(0, 0%, 7%, 0.85);
+    color: #fff;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: hsla(0, 0%, 7%, 1);
+    }
+  }
