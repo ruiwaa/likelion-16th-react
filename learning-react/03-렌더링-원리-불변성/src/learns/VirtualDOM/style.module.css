@@ -1,90 +1,98 @@
-.wrapper {
-  --color-white: #ffffff;
-  --color-gray-50: #f9fafb;
-  --color-gray-100: #f3f4f6;
-  --color-gray-200: #e5e7eb;
-  --color-gray-300: #d1d5db;
-  --color-gray-700: #374151;
-  --color-gray-900: #111827;
-  --color-primary: #2563eb;
-  --color-primary-dark: #1d4ed8;
+.container {
+  
+  --primary: #2563eb;
+  --danger: #ef4444;
+  --text-main: #111827;
+  --text-sub: #6b7280;
+  --bg-card: #ffffff;
+  --border: #e5e7eb;
 
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-2xl: 1rem;
-  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-
-  padding: 2rem;
-  border: 1px solid var(--color-gray-200);
-  border-radius: var(--radius-2xl);
-  background-color: var(--color-white);
-  max-width: 450px;
+  max-width: 900px;
   margin: 2rem auto;
-  box-shadow: var(--shadow-md);
+  padding: 2rem;
+  font-family: system-ui, -apple-system, sans-serif;
 
-  abbr {
-    cursor: help;
+  dfn {
     font-style: normal;
+  }
+
+  abbr[title] {
+    cursor: help;
     text-decoration: none;
-    border-radius: 3px;
-    padding: 0.1em 0.3em;
-    background: var(--color-gray-100);
+    background: #eaeaea;
+    padding: 0.1em 0.2em;
+    border-radius: 4px;
   }
 
   .heading {
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    color: var(--color-primary);
+    font-size: 1.75rem;
+    font-weight: 800;
     text-align: center;
+    margin-bottom: 2rem;
   }
 
-  .counterBox {
-    background-color: var(--color-gray-50);
-    padding: 2rem;
-    border-radius: var(--radius-xl);
-    text-align: center;
-    margin-bottom: 1.5rem;
+  .comparisonGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
 
-    .countText {
-      font-size: 1.125rem;
-      color: var(--color-gray-700);
+  .box {
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
 
-      & strong {
-        font-size: 2.5rem;
-        color: var(--color-primary);
+    h3 {
+      margin-top: 0;
+      font-size: 1.25rem;
+    }
+
+    .countDisplay {
+      margin-bottom: 1rem;
+      color: var(--text-sub);
+
+      strong {
         display: block;
-        margin-top: 0.5rem;
+        font-size: 2.5rem;
+        color: var(--text-main);
       }
     }
-  }
 
-  .actions {
-    display: flex;
-    gap: 0.75rem;
+    .inputField {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
 
     .button {
-      flex: 1;
-      padding: 0.75rem;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--color-gray-300);
-      background-color: var(--color-white);
-      font-weight: 600;
+      width: 100%;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
       cursor: pointer;
-      transition: all 0.2s;
+    }
 
-      &:hover {
-        background-color: var(--color-gray-100);
-      }
+    .reactBtn {
+      background: var(--primary);
+      color: white;
+    }
 
-      &.primary {
-        background-color: var(--color-primary);
-        color: var(--color-white);
-        border-color: var(--color-primary);
+    .vanillaBtn {
+      background: var(--text-main);
+      color: white;
+    }
 
-        &:hover {
-          background-color: var(--color-primary-dark);
-        }
+    .desc {
+      margin-top: 1rem;
+      font-size: 0.875rem;
+      color: var(--text-sub);
+
+      strong {
+        color: var(--danger);
       }
     }
   }
