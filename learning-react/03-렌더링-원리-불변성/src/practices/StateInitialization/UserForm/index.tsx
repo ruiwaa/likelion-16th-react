@@ -1,8 +1,10 @@
+import type { ResetEvent } from '@/types'
 import { useState, type SubmitEvent } from 'react'
 import S from './style.module.css'
 
 
 // 타입 별칭(Type Alias)
+// 내가 별칭을 부여하는 것
 type UserRole = 'user' | 'admin' | ''
 
 
@@ -19,11 +21,18 @@ export default function UserForm() {
     
   }
 
-  const handleReset = () => {
+
+ const handleReset = (e: ResetEvent) => {
     console.log('사용자가 입력한 폼 데이터 초기화');
 
-    // 리액트에 의해 제어되고 있는 컨트롤(입력 필드, 셀렉트 박스)의 초기값을 직접 수행
+     // [리액트에 의해 제어되지 않는 상황]
+     // 브라우저에 의해 제어되고 있는 네이티브 컨트롤의 경우
+     // 브라우저의 기본 초기화 기능으로 처리 가능
+      const formElement = e.currentTarget
+      formElement.reset()
 
+
+    // 리액트에 의해 제어되고 있는 컨트롤(입력 필드, 셀렉트 박스)의 초기값을 직접 수행
     setName('')
     setEmail('')
     setRole('')
@@ -64,7 +73,7 @@ export default function UserForm() {
       </select>
       
     </div>
-    <div role='group'
+    <div role='group' hidden
     style={{marginBlockStart:20, display:'flex',gap: 8}}>
       <button type="submit">제출</button>
       <button type="reset">초기화</button>
