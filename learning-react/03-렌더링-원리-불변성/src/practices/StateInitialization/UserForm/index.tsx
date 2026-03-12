@@ -73,7 +73,7 @@ export default function UserForm() {
       </select>
       
     </div>
-    <div role='group' hidden
+    <div role='group' 
     style={{marginBlockStart:20, display:'flex',gap: 8}}>
       <button type="submit">제출</button>
       <button type="reset">초기화</button>
