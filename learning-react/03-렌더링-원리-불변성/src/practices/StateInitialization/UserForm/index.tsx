@@ -1,24 +1,39 @@
-import { useState, type ChangeEvent } from 'react'
+import { useState, type SubmitEvent } from 'react'
 import S from './style.module.css'
 
 
 // 타입 별칭(Type Alias)
-type UserRole = 'user' | 'admin'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-type CustomChangeEventType =ChangeEvent<HTMLInputElement|HTMLSelectElement>
+type UserRole = 'user' | 'admin' | ''
+
 
 export default function UserForm() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [role, setRole] = useState<UserRole>('user')
+  const [role, setRole] = useState<UserRole>('')
 
   const userRoleKR = role === 'admin' ? '관리자' : '일반 사용자'
-  
 
+  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      console.log({name, email, role});
+    
+  }
+
+  const handleReset = () => {
+    console.log('사용자가 입력한 폼 데이터 초기화');
+
+    // 리액트에 의해 제어되고 있는 컨트롤(입력 필드, 셀렉트 박스)의 초기값을 직접 수행
+
+    setName('')
+    setEmail('')
+    setRole('')
+   }
+  
+  
   // 사용자 이름, 이메일, 역할
   return( 
   
-  <form className={S.container} onSubmit={(e) => e.preventDefault()}>
+  <form className={S.container} onSubmit={handleSubmit} onReset={handleReset}>
 
   <fieldset>
     <legend>사용자 정보 입력</legend>
@@ -48,6 +63,11 @@ export default function UserForm() {
         <option value="admin">관리자</option>
       </select>
       
+    </div>
+    <div role='group'
+    style={{marginBlockStart:20, display:'flex',gap: 8}}>
+      <button type="submit">제출</button>
+      <button type="reset">초기화</button>
     </div>
   </fieldset>
     <output className={S.preview}>
