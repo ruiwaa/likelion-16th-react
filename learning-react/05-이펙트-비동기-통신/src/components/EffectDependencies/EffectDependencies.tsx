@@ -37,6 +37,9 @@ export default function EffectDependencies() {
     document.title = `현재 카운트 = ${count}`
   }, [count])
 
+  const mountedISOTime = mounted ? new Date().toISOString() : undefined
+
+
   return (
     <article className={S.container}>
       <header className={S.display}>
@@ -81,7 +84,7 @@ export default function EffectDependencies() {
         <p>콘솔창(F12)을 확인하며 Effect의 동작을 관찰하세요.</p>
         <p>
           현재 입력 내용:
-          <ins className={S.textHighlight}>{text || '입력 대기 중...'}</ins>
+          <ins dateTime  ={mountedISOTime} className={S.textHighlight}>{text || '입력 대기 중...'}</ins>
         </p>
       </footer>
     </article>
