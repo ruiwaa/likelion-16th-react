@@ -1,0 +1,13 @@
+import S from './StaffNoResult.module.css'
+
+export default function StaffNoResult(){
+  return(
+<div className={S.noResult}>
+        <p className={S.noResultText}>
+          <strong>"{"검색어"}"</strong>에 대한 검색 결과가 없습니다.
+        </p>
+        <button className={S.resetBtn}>검색 초기화</button>
+      </div>
+
+  )
+}
