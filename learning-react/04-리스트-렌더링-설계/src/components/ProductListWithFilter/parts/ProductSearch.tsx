@@ -1,14 +1,14 @@
-import S from './ProductSearch.module.css'
+import S from "./ProductSearch.module.css";
 
-interface ProductSearchProps {
-  searchQuery?: string
-  setSearchQuery?: (nextSearchQuery: string) => void
+interface Props {
+  searchQuery: string;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function ProductSearch({
-  searchQuery = '',
-  setSearchQuery = () => {},
-}: ProductSearchProps) {
+export default function ProductSearch({ searchQuery, setSearchQuery }: Props) {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
   return (
     <search role="search" className={S.searchWrapper}>
       <label htmlFor="product-search" className={S.label}>
@@ -20,8 +20,8 @@ export default function ProductSearch({
         className={S.input}
         placeholder="찾는 상품명을 입력하세요"
         value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value.trim())}
+        onChange={handleSearch}
       />
     </search>
-  )
+  );
 }
