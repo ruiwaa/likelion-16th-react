@@ -4,11 +4,33 @@ import S from './EffectCleanup.module.css'
 export default function Timer() { 
   const [seconds, setSeconds] = useState(0)
 
+  useEffect(() => {
+
+    // 메모리 상의 동일 주소 참조를 사용해야 추가/제거가 가능!
+    const handleClick = () => {
+      console.log(`현재 seconds 값은 "${seconds}"이다.`)
+    }
+
+    // 문서를 통해 사용자와 상호작용하도록 이벤트를 연결(추가)
+    document.addEventListener('click', handleClick)
+
+    // 정리가 필요하다 (연결된 이벤트를 제거해야 한다)
+    return function cleanup() {
+      console.log('[클린업] 연결된 이벤트 제거')
+      
+      // 연결 및 해제하려면 힙의 주소가 동일 참조여야함
+      document.removeEventListener('click', handleClick)
+    }
+
+  }, [seconds])
+
+
   console.group('[리액트]')
 
   useEffect(
     // 이펙트 설정(setup) 함수
     () => {
+      // 리액트의 작동 원리(트리거, 렌더링, 커밋)이 끝난 이후에 부수적인 효과 적용
       console.group('[리액트 → 브라우저]')
         console.log('[리액트] DOM 커밋(commit)')
         console.log('[브라우저] 리플로우/리페인트')
@@ -16,6 +38,7 @@ export default function Timer() {
 
       console.group('[이펙트]')
         console.log('[이펙트 함수 실행] 타이머 시작(연결)')
+
       // Web API (setInterval, 특정 주기마다 콜백 함수 실행, 1000ms === 1s)
       const intervalId = setInterval(() => {
         console.group('[웹 API]')
