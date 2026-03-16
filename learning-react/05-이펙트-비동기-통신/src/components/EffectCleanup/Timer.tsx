@@ -1,28 +1,25 @@
 import { useEffect, useState } from "react"
 import S from './EffectCleanup.module.css'
 
+
+// 지연된 초기화 (lazy initialization)
+// 값 비싼 계산이 요구되는 코드
+const expensiveCalc = () => {
+  console.group('값 비싼 계산')
+    console.warn('값 비싼 계산이 수행됨')
+    const startTime = Date.now()
+
+    console.time('렌더링 지연 처리')
+    // 0.1초 렌더링 지연
+    while (Date.now() - startTime < 2000 /* 2s */) continue
+    console.timeEnd('렌더링 지연 처리')
+  console.groupEnd()
+
+  return 0
+}
+
 export default function Timer() { 
-  const [seconds, setSeconds] = useState(0)
-
-  useEffect(() => {
-
-    // 메모리 상의 동일 주소 참조를 사용해야 추가/제거가 가능!
-    const handleClick = () => {
-      console.log(`현재 seconds 값은 "${seconds}"이다.`)
-    }
-
-    // 문서를 통해 사용자와 상호작용하도록 이벤트를 연결(추가)
-    document.addEventListener('click', handleClick)
-
-    // 정리가 필요하다 (연결된 이벤트를 제거해야 한다)
-    return function cleanup() {
-      console.log('[클린업] 연결된 이벤트 제거')
-      
-      // 연결 및 해제하려면 힙의 주소가 동일 참조여야함
-      document.removeEventListener('click', handleClick)
-    }
-
-  }, [seconds])
+  const [seconds, setSeconds] = useState(expensiveCalc)
 
 
   console.group('[리액트]')
