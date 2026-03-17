@@ -42,10 +42,11 @@ add(1, 2) // undefined
 
 // 비동기 함수같은 복잡한 구조일 때, 타입스크립트가 현재 인자의 타입을 알 수 없음
 // 비동기 함수는 Promise를 받기 때문에 뒤에 타입을 지정해줘야 한다. 
-const addAsync = async (x: number, y: number): Promise<number> => {
-  const result: number = x + y
-  return new Promise((resolve) => setTimeout(() => resolve(result), 1000))
-}
+
+// const addAsync = async (x: number, y: number): Promise<number> => {
+//   const result: number = x + y
+//   return new Promise((resolve) => setTimeout(() => resolve(result), 1000))
+// }
 
 //const resolvedValue = await addAsync(10, 7)
 //console.log(resolvedValue.toLocaleString()) // number

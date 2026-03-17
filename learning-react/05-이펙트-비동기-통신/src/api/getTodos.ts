@@ -13,16 +13,18 @@ interface ResponseTodosData{
   todos: Todo[]
 }
 
-export const getTodos = async (userId: string) => {
+export const getTodos = async (userId: string, options?:RequestInit):Promise<Todo[]> => {
 
-const response = await fetch(`${TODOS_URL}/api/todos?userId=${userId}`)
-const data: ResponseTodosData = await response.json()
+try{
+  const response = await fetch(`${TODOS_URL}/api/todos?userId=${userId}`,options)
+  const data: ResponseTodosData = await response.json()
+  return data.todos
 
-return data.todos
+}catch(error){
+  throw error instanceof Error ? error  :  new Error(String(error))
+}
 
-// if(!response.ok){
-//   throw new Error (`해당되는 사용자 아이디 ${userId}가 존재하지 않습니다.`)
-// }
+
 
 }
 
