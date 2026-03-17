@@ -21,7 +21,6 @@ interface ResponseUserData {
 const API_URL = import.meta.env.VITE_API_URL
 
 
-
 export const getUser = async (userId: string, option?:RequestInit): Promise<ResponseUserData> => {
   try {
     const response = await fetch(`${API_URL}/api/users/${userId}`, option)
