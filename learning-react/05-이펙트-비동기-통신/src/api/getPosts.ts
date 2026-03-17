@@ -47,5 +47,5 @@ const addAsync = async (x: number, y: number): Promise<number> => {
   return new Promise((resolve) => setTimeout(() => resolve(result), 1000))
 }
 
-const resolvedValue = await addAsync(10, 7)
-console.log(resolvedValue.toLocaleString()) // number
+//const resolvedValue = await addAsync(10, 7)
+//console.log(resolvedValue.toLocaleString()) // number
