@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { useId, useState } from 'react'
 import NicknameField from './parts/NicknameField'
 import EmailField from './parts/EmailField'
 import PasswordField from './parts/PasswordField'
@@ -14,14 +14,37 @@ import S from './MultiInputForm.module.css'
 // 4. 폼 초기화(reset) 이벤트 핸들러를 작성하세요.
 // -------------------------------------------------------------------
 
+// 데이터를 하나의 객체로 관리
+const INITIAL_FORM_STATE = {
+  nickname:'',
+  email: '',
+  password: '',
+  passwordConfirm : ''
+}
+
+// 사용자 정의 타입 알리아스
+type FormState =  typeof INITIAL_FORM_STATE
+type FormStateKey = keyof FormState
+
 export default function MultiInputForm() {
   const sectionId = useId()
+  const [formState, setFormState] = useState<FormState>(INITIAL_FORM_STATE)
+  const [formResetKey, setFormResetKey] = useState(0)
 
-  const nickname = ''
-  const email = ''
-  const password = ''
-  const passwordConfirm = ''
+  const changeFormState = (name:FormStateKey, value: string)=> {
+    // 방법 1 상태 업데이트 함수에 전달
+    setFormState({
+    ...formState,
+    [name]:value,
+    })
+  }
 
+
+  //키값을 활용하여 폼 상태 초기화하기
+ const handleReset:React.ReactEventHandler<HTMLFormElement>  = () => {
+  setFormState(INITIAL_FORM_STATE)
+  setFormResetKey((prev)=> prev + 1 )
+ }
   return (
     <article className={S.card} aria-labelledby={sectionId}>
       <header className={S.header}>
@@ -33,23 +56,27 @@ export default function MultiInputForm() {
         </p>
       </header>
 
-      <form className={S.form}>
+      <form key={formResetKey} className={S.form} onReset={handleReset}>
         <NicknameField
-          value={nickname}
-          onChange={() => {}}
+          value={formState.nickname}
+          onChange={(value) => {changeFormState('nickname',value)
+            // 방법 2 업데이터 함수 활용
+            // setFormState((prev) => ({...prev, nickname:value
+            // }))
+          }}
         />
         <EmailField
-          value={email}
-          onChange={() => {}}
+          value={formState.email}
+          onChange={(value) => {changeFormState('email',value )}}
         />
         <PasswordField
-          value={password}
-          onChange={() => {}}
+          value={formState.password}
+          onChange={(value) => {changeFormState('password',value)}}
         />
         <PasswordConfirmField
-          value={passwordConfirm}
-          basePassword={password}
-          onChange={() => {}}
+          value={formState.passwordConfirm}
+          basePassword={formState.password}
+          onChange={(value) => {changeFormState('passwordConfirm',value)}}
         />
         <div role="group" className={S.buttonGroup}>
           <button type="reset" className={S.resetButton}>
