@@ -1,7 +1,14 @@
 import { useId, useState } from 'react'
-import { PasswordInput } from './PasswordInput'
 import S from '../SmartForm.module.css'
+import { PasswordInput } from './PasswordInput'
+import ShowErrorOrInfoMessage from './ShowErrorOrInfoMessage'
+import { createValidator } from './util'
 
+
+const validatePasswordConfirm = createValidator('확인용 패스워드를 입력해야 합니다.',
+  (value) => value === 'true' ? '' : '패스워드와 동일한 값을 입력해야 합니다.'
+
+)
 interface Props {
   value: string
   basePassword: string
@@ -29,17 +36,8 @@ export default function PasswordConfirmField({
 }: Props) {
   const fieldId = useId()
   const messageId = useId()
-
   const [isTouched, setIsTouched] = useState(false)
-
-  const getErrorMessage = () => {
-
-    if(!isTouched) return ''
-    if(!value) return '확인용 패스워드를 입력해야 합니다.'
-    return value !== basePassword ? '패스워드와 동일한 값을 입력해야 합니다.' : ''
-  }
-    let error = getErrorMessage ()
-    const showError = error !== '' // 에러가 빈값이 아닌 경우에만 참
+  const [error, showError] = validatePasswordConfirm(String(value === basePassword), isTouched)
 
   return (
     <div className={S.field}>
@@ -56,15 +54,11 @@ export default function PasswordConfirmField({
         isError={showError}
       />
 
-      {showError ? (
-        <p role="alert" className={S.errorMessage}>
-          {error}
-        </p>
-      ) : (
-        <p id={messageId} className={S.infoMessage}>
-          패스워드와 동일한 값 입력
-        </p>
-      )}
+      <ShowErrorOrInfoMessage
+        id={messageId}
+        hint="패스워드와 동일한 값 입력"
+        error={error}
+      />      
     </div>
   )
 }

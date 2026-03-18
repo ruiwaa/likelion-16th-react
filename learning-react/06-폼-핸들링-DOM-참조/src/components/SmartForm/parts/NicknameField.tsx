@@ -1,5 +1,7 @@
 import { useId, useState } from 'react'
 import S from '../SmartForm.module.css'
+import ShowErrorOrInfoMessage from './ShowErrorOrInfoMessage'
+import { createValidator} from './util'
 
 const MAX_NICKNAME = 10
 const PROFANITY_PATTERN = '바보 멍청이 또라이'.split(' ').join('|')
@@ -11,22 +13,16 @@ interface Props {
   onChange: React.Dispatch<React.SetStateAction<string>>
 }
 
+
+const validateNickName = createValidator('닉네임을 입력하세요',
+(value: string) => PROFANITY_REG.test(value)? '비속어는 닉네임으로 사용할 수 없습니다.' : '')
+
 export default function NicknameField({ value, onChange }: Props) {
   const fieldId = useId()
   const messageId = useId()
-
   const [isTouched, setIsTouched] = useState(false)
+  const [error, showError] = validateNickName(value, isTouched)
 
-  const getErrorMessage = () => {
-    if (!isTouched) return ''
-    if (!value) return '닉네임을 입력하세요.'
-    return PROFANITY_REG.test(value)
-      ? '비속어는 닉네임으로 사용할 수 없습니다.'
-      : ''
-  }
-
-  const error = getErrorMessage()
-  const showError = error !== ''
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
@@ -70,17 +66,12 @@ export default function NicknameField({ value, onChange }: Props) {
           changeProfanity(e.target.value)
         }}
       />
-      {
-        showError ? (
-          <p id={messageId} role="alert" className={S.errorMessage}>
-            {error}
-          </p>
-        ) : (
-          <p id={messageId} className={S.infoMessage}>
-            비속어(예: 바보, 멍청이, 또라이 등) 사용 금지
-          </p>
-        )
-      }
+
+    <ShowErrorOrInfoMessage
+        id={messageId}
+        hint="비속어(예: 바보, 멍청이, 또라이 등) 사용 금지"
+        error={error}
+      />
     </div>
   )
 }
