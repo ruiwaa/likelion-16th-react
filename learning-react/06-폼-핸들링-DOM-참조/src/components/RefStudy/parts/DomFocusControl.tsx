@@ -1,3 +1,5 @@
+
+import { useRef } from 'react';
 import styles from '../RefStudy.module.css'
 
 // ---------------------------------------------------------------------
@@ -15,8 +17,11 @@ import styles from '../RefStudy.module.css'
 // ---------------------------------------------------------------------
 
 const SCROLL_ITEMS_COUNT = 10 // 스크롤 아이템 개수
-
 export default function DomFocusControl() {
+  // 렌더링과 상관없이 특정(JavaScript 데이터 또는 DOM 객체) 값을 
+  // 기억할 수 있으려면 Ref 객체를 사용한다. (RefObject의 필요성)
+  const focusInputRef = useRef<HTMLInputElement>(null)
+  const handleFocusInput = () => focusInputRef.current?.select()
 
   return (
     <section className={styles.section}>
@@ -24,14 +29,20 @@ export default function DomFocusControl() {
 
       {/* 포커스 제어 영역 */}
       <div className={styles.inputGroup}>
-        <input
+        <input  
           type="text"
           className={styles.input}
           placeholder="여기에 초점이 이동됩니다."
+          aria-label='초점 이동 테스트'
+          ref = {focusInputRef}
         />
+
         <button
           type="button"
           className={`${styles.button} ${styles.primary}`}
+          // 리액트 방식 (DOM 접근/조작)
+          // 초점 이동 (브라우저에서)
+          onClick={handleFocusInput}
         >
           초점 이동
         </button>
