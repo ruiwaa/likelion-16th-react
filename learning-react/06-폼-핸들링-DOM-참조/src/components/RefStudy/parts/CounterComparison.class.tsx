@@ -15,7 +15,7 @@ class CounterComparisonClass extends React.Component<Props, State> {
     // Props 할당 (this 멤버 구성)
     super(props)
 
-    // 상태
+    // 상태 (state 증가)
     this.state = { count: 0 }
 
     // 이벤트 핸들러 (this 바인딩)
@@ -62,7 +62,7 @@ class CounterComparisonClass extends React.Component<Props, State> {
   // ----------------------------------------------------------------------
 
   public render() {
-    // 렌더 메서드의 지역 변수
+    // 렌더 메서드의 지역 변수 (variable)
     let countVariable = 0
 
     // 렌더 메서드의 지역 함수 (이벤트 핸들러)
@@ -108,7 +108,7 @@ class CounterComparisonClass extends React.Component<Props, State> {
             className={S.button}
             onClick={this.handleIncrementInstance}
           >
-            Instance 증가 ({this.count})
+            Instance 증가 ({this.count}) 
           </button>
         </div>
       </section>
