@@ -1,29 +1,62 @@
-import S from './ReferenceCheck.module.css'
+/* eslint-disable react-hooks/immutability */
+import { useState } from "react";
+import S from "./ReferenceCheck.module.css";
 
 export default function ReferenceCheck() {
-  
-  const user = {
-    name: '이두나',
+  const INITIAL_USER = {
+    name: "이두나",
     age: 21,
     profile: {
-      city: '서울',
+      city: "서울",
+      postcode: "014572",
     },
-  }
+  };
+
+  type User = typeof INITIAL_USER;
+
+  const [user, setUser] = useState<User>({
+    ...INITIAL_USER,
+    profile: {
+      ...INITIAL_USER.profile,
+    },
+  });
 
   const handleWrongUpdate = () => {
     // ❌ Mutation: 데이터는 바뀌지만 참조가 같음
-    console.error('뮤테이션')
-  }
+    user.name = "강하영 (변경됨)";
+    user.profile.postcode = "91920 (변경됨)";
+
+    setUser(user);
+    console.error("뮤테이션");
+  };
 
   const handleRightUpdate = () => {
     // ✅ Immutability: 새로운 객체 생성 (새로운 참조 주소)
-    console.log('%c✅ 불변성 유지:', 'color: #04a200;')
-  }
+
+    const nextUser = {
+      ...user,
+      name: "주성천",
+      profile: {
+        ...user.profile,
+        city: " 부산",
+      },
+    };
+    setUser(nextUser);
+
+    console.log("%c✅ 불변성 유지:", "color: #04a200;");
+    console.table(nextUser);
+  };
 
   const handleReset = () => {
     // ⚠️ Mutation: 예상치 못한 결과 확인(참조형 데이터 오염)
-    console.warn('참조형 데이터 오염')
-  }
+    console.warn("참조형 데이터 오염");
+    setUser({
+      ...INITIAL_USER,
+      profile: {
+        ...INITIAL_USER.profile,
+      },
+    });
+  };
 
   return (
     <div className={S.container}>
@@ -47,7 +80,11 @@ export default function ReferenceCheck() {
             </div>
             <div className={S.infoRow}>
               <dt className={S.label}>도시</dt>
-              <dd className={S.badge}>{user.profile.city}</dd>
+              <dd className={S.badge}>{user.profile.city} </dd>
+            </div>
+            <div className={S.infoRow}>
+              <dt className={S.label}>우편번호</dt>
+              <dd className={S.value}>{user.profile.postcode} </dd>
             </div>
           </dl>
         </div>
@@ -82,5 +119,5 @@ export default function ReferenceCheck() {
         </footer>
       </section>
     </div>
-  )
+  );
 }
