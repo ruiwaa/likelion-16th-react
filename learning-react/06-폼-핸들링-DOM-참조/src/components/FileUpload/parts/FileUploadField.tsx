@@ -21,6 +21,7 @@ export default function FileUploadField({ ref, previewUrl, onFileChange, onDelet
       <span className={S.label}>프로필 사진</span>
       <div className={S.uploadWrapper}>
         <input
+        // ref 포워딩 
         ref={ref}
           type="file"
           id="profileImage"
