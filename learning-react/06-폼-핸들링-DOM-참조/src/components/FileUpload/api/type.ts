@@ -21,7 +21,7 @@ export interface ImageData {
   delete_url: string;
 }
 
-// 공통 타입이 있다면 인터페이스로 형성해주기
+// 공통 타입을 하나의 인터페이스로 묶어주기
 export interface ImageInfo {
   filename: string;
   name: string;

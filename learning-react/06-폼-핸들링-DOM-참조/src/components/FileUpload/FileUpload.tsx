@@ -1,19 +1,11 @@
+import { useRef, useState } from "react";
+import { uploadFile } from "./api/upload";
+import type { ImageData } from "./api/type";
 import NickNameField from "./parts/NickNameField";
 import FileUploadField from "./parts/FileUploadField";
 import SaveButton from "./parts/SaveButton";
-// import FileUploadResult from './parts/FileUploadResult'
+import FileUploadResult from "./parts/FileUploadResult";
 import S from "./FileUpload.module.css";
-import { useRef, useState } from "react";
-import type { ResponseData } from "./api/type";
-
-// api 변수 선언
-const { VITE_IMGBB_URL: apiUrl, VITE_IMGBB_API_KEY: apiKey } = import.meta.env;
-
-const getEndPoint = () => {
-  const url = new URL(apiUrl);
-  url.searchParams.append("key", apiKey);
-  return url.toString();
-};
 
 // --------------------------------------------------------------------------------------
 // 실습 가이드
@@ -56,7 +48,8 @@ export default function FileUpload() {
 
   //[참조] fileUploadField 내부의 인풋 타임 파일 요소를 참조하기 위한 Ref 객체 생성
   const fileRef = useRef<HTMLInputElement>(null); // { current: null } -> { current: HTMLInputElement }
-
+  // 업로드 된 파일
+  const [uploadedData, setUploadedData] = useState<null | ImageData>(null);
   // [재사용 함수]
   const resetPreviewAndFile = () => {
     // 미리보기 이미지 초기화
@@ -115,26 +108,18 @@ export default function FileUpload() {
 
     try {
       setIsUploading(true);
-
+      // 업로드된 파일 데이터(응답)
       // 서버에 파일 업로드 요청
-      // 폼데이터
-      const response = await fetch(getEndPoint(), {
-        method: "POST",
-        body: formData,
-      });
+      // 폼 데이터
+      const result = await uploadFile(formData);
+      if (result.success) {
+        // 업로드된 파일 데이터를 uploadedData 상태 업데이트
+        setUploadedData(result.data);
+        // 업로드 파일 미리보기 및 파일 인풋 초기화
+        resetPreviewAndFile();
 
-      if (!response.ok) {
-        throw new Error("파일 업로드 실패!");
+        alert("파일 업로드 성공");
       }
-
-      const responseData: ResponseData = await response.json();
-      console.log(responseData);
-
-      // 업로드 파일 미리보기 및 파일 인풋 초기화
-
-      resetPreviewAndFile();
-
-      alert("파일 업로드 성공");
     } catch (error) {
       console.error(error);
     } finally {
@@ -158,7 +143,7 @@ export default function FileUpload() {
         />
         <SaveButton isDisabled={isDisabled} isUpLoading={isUploading} />
       </form>
-      {/* <FileUploadResult /> */}
+      {uploadedData && <FileUploadResult uploadedData={uploadedData} />}
     </section>
   );
 }
