@@ -38,8 +38,13 @@
         border: none;
         cursor: pointer;
 
-        &:hover {
+        &:hover:not([aria-disabled="true"]) {
           background-color: #1d4ed8;
+        }
+        &[aria-disabled="true"] {
+          cursor: not-allowed;
+          filter: grayscale(0.9);
+          opacity: 0.45;
         }
       }
     }
