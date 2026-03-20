@@ -52,6 +52,8 @@ export default function FileUpload() {
   const [uploadedData, setUploadedData] = useState<null | ImageData>(null);
   // [재사용 함수]
   const resetPreviewAndFile = () => {
+    if (uploadedData) setUploadedData(null);
+
     // 미리보기 이미지 초기화
     if (previewUrl) {
       URL.revokeObjectURL(previewUrl);
@@ -68,6 +70,9 @@ export default function FileUpload() {
     const { files } = e.target;
     const file = files?.[0];
     if (!file) return; // 업로드할 파일이 없다면 함수 종료 (빠른 반환)
+
+    // 파일 선택 시 uploadedData 상태 초기화
+    if (uploadedData) setUploadedData(null);
 
     // URL.revokeObjectURL (URL 해제, 메모리 정리)
     // 파일이 존재한다면, 먼저 해제하기
