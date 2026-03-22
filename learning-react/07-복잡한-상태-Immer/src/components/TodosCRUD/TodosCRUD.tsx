@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import S from "./TodosCRUD.module.css";
 import type { Todo } from "./type";
+import { formatDate } from "../utils";
 
 // --------------------------------------------------------------
 // 실습 가이드
@@ -36,10 +37,13 @@ const INITIAL_TODOS: Todo[] = [
     },
   },
 ];
+const getISOString = () => new Date().toISOString();
+const DEBOUNCE_TIME = 300;
 
 export default function NestedObject() {
   // 할일 목록(상태)
   const [todos, setTodos] = useState(INITIAL_TODOS);
+
   // 할 일을 뒤집는 목록(파생된 상태: 상태가 변경되면 렌더링 중에 다시 계산된 값)
   const reversedTodos = todos.toReversed(); //원본 복사하여 반대로 정렬
 
@@ -48,9 +52,22 @@ export default function NestedObject() {
 
   // 파생된 상태
   const addIsDisabled = 1 > doit.trim().length;
+
+  // 리액트 렌더링 프로세스와 무관하게 특정 값을 기억해야한다.
+  // useRef 사용
+  const timeoutIdRef = useRef<ReturnType<typeof setTimeout>>(null);
+
   const handleChangeDoit = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    setDoit(value);
+    const timeoutId = timeoutIdRef.current;
+    //  timeoutId.current이 null이 아닌 경우에만
+    // 사용자가 입력할 때마다 설정된 타이머 해제
+    if (timeoutId) clearTimeout(timeoutId);
+
+    //특정 시간이 지난 후 지연되어 처리되는 상태 업데이트
+    timeoutIdRef.current = setTimeout(() => {
+      setDoit(value);
+    }, DEBOUNCE_TIME);
   };
   // input 컴포넌트 참조 (DOM 접근/ 조작)
   const doItInputRef = useRef<HTMLInputElement>(null);
@@ -65,13 +82,46 @@ export default function NestedObject() {
       text: doit,
       done: false,
       metadata: {
-        createdAt: new Date().toISOString(),
+        createdAt: getISOString(),
         updatedAt: null,
       },
     };
 
     // 실행 시점의 최신값을 넘겨줌(상태 업데이트)
     setTodos((prev) => [...prev, newTodo]);
+  };
+
+  // 할 일 수정(Update)
+  const updateTodo = (todoId: Todo["id"]) =>
+    setTodos(
+      todos.map((todo) =>
+        todo.id !== todoId
+          ? todo
+          : {
+              ...todo,
+              done: !todo.done,
+              metadata: {
+                ...todo.metadata,
+                updatedAt: getISOString(),
+              },
+            },
+      ),
+    );
+
+  // 할 일 삭제
+  const deleteTodo = (todoId: Todo["id"]) => {
+    if (confirm("정말로 할 일을 삭제하시겠습니까?")) {
+      // filter 메서드를 사용하는 이유
+      // filter 안에 조건이 '참'인 인자들만 남기기때문에
+      // 해당 todo.id 와 같지 않다면, 그 인자들을 통과시켜버림
+      // 통과 = 삭제
+      const nextTodos = todos.filter((todo) => todo.id !== todoId);
+      // if(todo.id === todoId) {return true}
+      // else return false
+      // 위의 filter 메서드 구문과 같은 맥락
+
+      setTodos(nextTodos);
+    }
   };
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -113,7 +163,7 @@ export default function NestedObject() {
             //     addButton?.setAttribute("aria-disabled", "false");
             //   } else addButton?.setAttribute("aria-disabled", "true");
             // }}
-            value={doit}
+            defaultValue={doit}
             onChange={handleChangeDoit}
             type="text"
             name="doit"
@@ -147,7 +197,9 @@ export default function NestedObject() {
               <span className={todoTextClassName}>
                 {todo.text}
                 <span className="sr-only">
-                  {!todo.done ? `${createdAt} 생성` : `${updatedAt} 완료`}
+                  {!todo.done
+                    ? `${formatDate(createdAt)} 생성`
+                    : `${updatedAt} 완료`}
                 </span>
               </span>
               <div className={S.buttonGroup}>
@@ -155,6 +207,7 @@ export default function NestedObject() {
                   type="button"
                   className={S.buttonToggle}
                   aria-pressed={todo.done}
+                  onClick={() => updateTodo(todo.id)}
                 >
                   {todo.done ? "취소" : "완료"}
                 </button>
@@ -162,6 +215,7 @@ export default function NestedObject() {
                   type="button"
                   className={S.buttonDelete}
                   aria-label={`${todo.text} 삭제`}
+                  onClick={() => deleteTodo(todo.id)}
                 >
                   삭제
                 </button>
