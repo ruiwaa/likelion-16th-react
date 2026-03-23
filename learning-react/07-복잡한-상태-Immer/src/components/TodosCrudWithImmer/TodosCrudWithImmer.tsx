@@ -1,90 +1,147 @@
-import { useState, useRef, useId } from 'react'
-import S from './TodosCurdWithImmer.module.css'
+import { useImmer } from "use-immer";
+import { useState, useRef, useId } from "react";
+import S from "./TodosCurdWithImmer.module.css";
 
 interface Todo {
-  id: string
-  text: string
-  done: boolean
+  id: string;
+  text: string;
+  done: boolean;
   metadata: {
-    createdAt: string
-    updatedAt: string | null
-  }
+    createdAt: string;
+    updatedAt: string | null;
+  };
 }
 
 const INITIAL_TODOS: Todo[] = [
   {
-    id: 'todo-1773533484499',
-    text: '중첩된 객체 합성',
+    id: "todo-1773533484499",
+    text: "중첩된 객체 합성",
     done: false,
     metadata: {
-      createdAt: '2026-03-18T17:12:41.964Z',
+      createdAt: "2026-03-18T17:12:41.964Z",
       updatedAt: null,
     },
   },
   {
-    id: 'todo-1773533492567',
-    text: '전개 연산자 사용 힘들어! 😭',
+    id: "todo-1773533492567",
+    text: "전개 연산자 사용 힘들어! 😭",
     done: false,
     metadata: {
-      createdAt: '2026-03-19T21:06:47.985Z',
+      createdAt: "2026-03-19T21:06:47.985Z",
       updatedAt: null,
     },
   },
-]
+];
 
 export default function TodosCrudWithImmer() {
-  const [todos, setTodos] = useState<Todo[]>(INITIAL_TODOS)
+  // 읽기
+  // const [todos, setTodos] = useState<Todo[]>(INITIAL_TODOS)
 
-  const [doIt, setDoIt] = useState('')
-  const todoInputRef = useRef<HTMLInputElement>(null)
+  //Immer 코드 사용 예시
+  const [todos, setTodos] = useImmer(INITIAL_TODOS);
 
+  // 쓰기
   const addTodo = () => {
-    const newTodo: Todo = {
-      id: `todo-${Date.now()}`,
-      text: doIt,
-      done: false,
-      metadata: {
-        createdAt: getCurrentDate(),
-        updatedAt: null,
-      },
+    //useState 방식
+    // const newTodo: Todo = {
+    //   id: `todo-${Date.now()}`,
+    //   text: doIt,
+    //   done: false,
+    //   metadata: {
+    //     createdAt: getCurrentDate(),
+    //     updatedAt: null,
+    //   },
+    // };
+
+    // setTodos((prev) => [...prev, newTodo]);
+
+    setTodos((draft) => {
+      // draft(초안): 뮤테이션 방식을 적용할 수 있는 프록시(대체자) 객체
+      const newTodo: Todo = {
+        id: `todo-${Date.now()}`,
+        text: doIt,
+        done: false,
+        metadata: {
+          createdAt: getCurrentDate(),
+          updatedAt: null,
+        },
+      };
+
+      draft.push(newTodo);
+    });
+
+    // 입력 필드 초기화
+    setDoIt("");
+    todoInputRef.current?.focus();
+  };
+
+  // 수정
+  const toggleTodo = (todoId: Todo["id"]) => {
+    // Immer 사용 예시 코드
+    setTodos((draft) => {
+      // 초안(대체자) 배열에서 todoId와 일치하는 아이템 찾기
+      const item = draft.find((item) => item.id === todoId);
+
+      // 만약 item이 있다면?
+      if (item) {
+        // 완료(done) 여부 토글
+        item.done = !item.done;
+        // 수정(updatedAt) 날짜 설정
+        item.metadata.updatedAt = getCurrentDate();
+      }
+    });
+
+    //useState 방식
+    // setTodos((prev) =>
+    //   prev.map((todo) =>
+    //     todo.id === todoId
+    //       ? {
+    //           ...todo,
+    //           done: !todo.done,
+    //           metadata: {
+    //             ...todo.metadata,
+    //             updatedAt: getCurrentDate(),
+    //           },
+    //         }
+    //       : todo,
+    //   ),
+    // );
+  };
+
+  // 삭제
+  const deleteTodo = (todoId: Todo["id"]) => {
+    if (confirm("정말 삭제하시겠습니까?")) {
+      setTodos((draft) => {
+        // 삭제할 인덱스 찾기 (뮤데이션 방식으로 배열의 인덱스 삭제)
+        // 배열.splice (삭제할 인덱스, 1)
+        const index = draft.findIndex((item) => item.id === todoId);
+
+        // 배열 안에 아이템이 없다면 종료(인덱스 -1 방지)
+        if (index < 0) return;
+        draft.splice(index, 1);
+      });
     }
 
-    setTodos((prev) => [...prev, newTodo])
-    setDoIt('')
-    todoInputRef.current?.focus()
-  }
-
-  const toggleTodo = (todoId: Todo['id']) => {
-    setTodos((prev) =>
-      prev.map((todo) =>
-        todo.id === todoId
-          ? {
-              ...todo,
-              done: !todo.done,
-              metadata: {
-                ...todo.metadata,
-                updatedAt: getCurrentDate(),
-              },
-            }
-          : todo,
-      ),
-    )
-  }
-
-  const deleteTodo = (todoId: Todo['id']) => {
+    //useState 방식
     // if (confirm('정말 삭제하시겠습니까?')) {
-      setTodos((prev) => prev.filter((todo) => todo.id !== todoId))
+    // setTodos((prev) => prev.filter((todo) => todo.id !== todoId));
     // }
-  }
+  };
 
+  // 핸들러
   const handleAddTodo = (e: React.SubmitEvent) => {
-    e.preventDefault()
-    if (isDisabled) return
-    addTodo()
-  }
+    e.preventDefault();
+    if (isDisabled) return;
+    addTodo();
+  };
 
-  const sectionId = useId()
-  const isDisabled = 1 > doIt.trim().length
+  // 상태
+  const sectionId = useId();
+  const [doIt, setDoIt] = useState("");
+  const todoInputRef = useRef<HTMLInputElement>(null);
+
+  // 파생된 상태
+  const isDisabled = 1 > doIt.trim().length;
 
   return (
     <section className={S.container} aria-labelledby={sectionId}>
@@ -115,8 +172,9 @@ export default function TodosCrudWithImmer() {
 
       <ul className={S.list} aria-label="할 일 목록">
         {todos.toReversed().map((todo) => {
-          const todoTextClassName = `${S.text} ${todo.done ? S.completed : ''}`.trim()
-          const { createdAt, updatedAt } = todo.metadata
+          const todoTextClassName =
+            `${S.text} ${todo.done ? S.completed : ""}`.trim();
+          const { createdAt, updatedAt } = todo.metadata;
 
           return (
             <li key={todo.id} className={S.item}>
@@ -135,7 +193,7 @@ export default function TodosCrudWithImmer() {
                   aria-pressed={todo.done}
                   onClick={() => toggleTodo(todo.id)}
                 >
-                  {todo.done ? '취소' : '완료'}
+                  {todo.done ? "취소" : "완료"}
                 </button>
                 <button
                   type="button"
@@ -147,7 +205,7 @@ export default function TodosCrudWithImmer() {
                 </button>
               </div>
             </li>
-          )
+          );
         })}
       </ul>
 
@@ -155,17 +213,17 @@ export default function TodosCrudWithImmer() {
         <p className={S.empty}>할 일 목록이 비어 있습니다.</p>
       )}
     </section>
-  )
+  );
 }
 
 function getCurrentDate() {
-  return new Date().toISOString()
+  return new Date().toISOString();
 }
 
 function formatData(dateInfo: string) {
-  return new Date(dateInfo).toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
+  return new Date(dateInfo).toLocaleDateString("ko-KR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 }
