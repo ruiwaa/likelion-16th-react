@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { DeviceItem } from './parts/DeviceItem'
 import S from './SmartHomePanel.module.css'
 
@@ -18,11 +18,12 @@ export default function SmartHomePanel() {
 
   const connectedCount = devices.filter(({ status }) => status).length
 
-  const toggleDevice = (name: string) => {
+  const toggleDevice = useCallback((name: string) => {
+    // 상태 업데이트
     setDevices((prev) =>
       prev.map((d) => (d.name === name ? { ...d, status: !d.status } : d)),
     )
-  }
+  }, [])
 
   const [now, setNow] = useState(getNow)
 

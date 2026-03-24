@@ -1,5 +1,5 @@
-import { MemoizationCallback } from "@/learns";
 import S from "./style.module.css";
+import { SmartHomePanel } from "@/practices";
 // import GrandFather from "../learns/CompositonRender/parts/GrandFather";
 // import Father from "../learns/CompositonRender/parts/Father";
 // import Child from "../learns/CompositonRender/parts/Child";
@@ -7,7 +7,7 @@ import S from "./style.module.css";
 export default function App() {
   return (
     <div className={S.container}>
-      <MemoizationCallback />
+      <SmartHomePanel />
       {/* <CompositionRender>
         <GrandFather>
           <Father>
