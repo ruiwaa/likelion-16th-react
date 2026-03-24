@@ -1,5 +1,5 @@
 import S from "./style.module.css";
-import { SmartHomePanel } from "@/practices";
+import SmartHomePanel from '@/practices/SmartHomePanel-step-2'
 // import GrandFather from "../learns/CompositonRender/parts/GrandFather";
 // import Father from "../learns/CompositonRender/parts/Father";
 // import Child from "../learns/CompositonRender/parts/Child";
