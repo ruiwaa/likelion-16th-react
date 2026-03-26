@@ -53,7 +53,6 @@ export function useFetch<T>({
 
           // fetch 옵션 객체 (외부에서 전달된 options 참조 객체와 signal 합성)
           const fetchConfig = { ...optionsRef.current, signal }
-          console.log({fetchConfig})
           const response = await fetch(url, fetchConfig)
 
           if (!response.ok) {
