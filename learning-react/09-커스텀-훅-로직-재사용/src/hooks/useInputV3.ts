@@ -6,6 +6,8 @@ import { useCallback, useRef, useState } from 'react'
  * @returns props: JSX 요소에 주입할 속성 모음
  * @returns methods: 입력 제어를 위한 메서드 모음
  */
+
+// T는 HTMLInputElement의 기능을 모두 가지고 있는 어떤 타입이라는 의미이다.
 export function useInputV3<T extends HTMLInputElement>(initialValue = '') {
   const [value, setValue] = useState(initialValue)
 

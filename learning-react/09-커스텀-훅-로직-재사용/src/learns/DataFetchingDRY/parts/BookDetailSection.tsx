@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import S from './BookDetailSection.module.css'
 import { formatDate } from '@/util'
+import { useFetchv1 } from '@/hooks'
 
 // API 참고
 // - https://koreandummyjson.vercel.app/docs/books
@@ -39,6 +40,10 @@ const getEndpoint = (path: string) => {
 
 export default function BookDetailSection() {
   const [bookId, setBookId] = useState(1)
+  
+  useFetchv1<ResponseBookData>(getEndpoint(`/api/books/${bookId}`))
+ 
+  
 
   // 중복 로직 1: 도서 정보 가져오기
   const [book, setBook] = useState<Book | null>(null)
