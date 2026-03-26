@@ -1,5 +1,5 @@
 import S from './style.module.css'
-import {useToggle, useInputV3} from '@/hooks'
+import {useToggle, useInput} from '@/hooks'
 
 
 export default function ReusingLogics() {
@@ -11,8 +11,8 @@ export default function ReusingLogics() {
 
   // 중복 로직 3: Input (사용자 이름용)
   // 중복 로직 4: Input (이메일용)
-  const nameInput = useInputV3('')
-  const emailInput = useInputV3('')
+  const nameInput = useInput('')
+  const emailInput = useInput('')
 
   const handleResetAll = () => {
   

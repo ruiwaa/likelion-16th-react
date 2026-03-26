@@ -3,6 +3,5 @@
 export * from './useToggle'
 export * from './useInput'
 export * from './useSimple'
-export * from './useInputV3'
 export * from './useFetchv1'
-// export * from './useFetchv2'
+export * from './useFetch'
