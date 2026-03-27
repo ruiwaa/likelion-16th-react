@@ -1,15 +1,12 @@
-import S from './style.module.css'
+import S from "./style.module.css";
 
 export default function Login() {
-  
   const handleLogin = (e: React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const formData = new FormData(e.currentTarget)
-    const email = formData.get('email') as string
-    
-  }
-
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+  };
   return (
     <div className={S.page}>
       <div className={S.box}>
@@ -25,5 +22,5 @@ export default function Login() {
         </form>
       </div>
     </div>
-  )
+  );
 }
