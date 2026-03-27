@@ -1,17 +1,10 @@
-import { useContext } from 'react'
 import childIcon from '../icons/child.png'
-import { FamilyContext } from '../index'
 import S from '../style.module.css'
+import { useFamily } from '@/contexts/FamilyContext/context'
 
 export default function Child() {
-  const familyContextValue = useContext(FamilyContext)
-
-  if (!familyContextValue) {
-    throw new Error('familyContextValue가 존재하지 않습니다.')
-  }
-
-  const { name, setName, email, setEmail, checked, setChecked } = familyContextValue
-
+  
+ const {name, email, checked, setName, setEmail, setChecked} = useFamily()
   return (
     <section className={`${S.box} ${S.active}`}>
       <h4 className={`${S.familyTitle} ${S.child}`}>

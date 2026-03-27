@@ -1,17 +1,27 @@
-import { createContext , type Dispatch, type SetStateAction } from "react";
+import { createContext, useContext } from "react"
 
-// 컨텍스트 데이터(값) 타입 정의
-export interface FamilyContextValue {
-  // 상태
+type SetAction<T> = React.Dispatch<React.SetStateAction<T>>
+
+interface FamilyContextValue {
   name: string
+  setName: SetAction<string>
   email: string
+  setEmail: SetAction<string>
   checked: boolean
-
-  // 액션(함수)
-  setName: Dispatch<SetStateAction<string>>
-  setEmail: Dispatch<SetStateAction<string>>
-  setChecked: Dispatch<SetStateAction<boolean>>
+  setChecked: SetAction<boolean>
 }
 
-// 리액트 컨텍스트 생성
-export const FamilyContext = createContext<FamilyContextValue|null>(null)
+
+export const FamilyContext = createContext<null|FamilyContextValue>(null)
+
+
+// 컨텍스트 전용 커스텀 훅 정의 후 내보내기 
+export const useFamily = () => {
+  const familyContextValue = useContext(FamilyContext)
+
+  if (!familyContextValue) {
+    throw new Error('useFamily훅은 FamilyProvider 내부에서만 사용해야 합니다. ')
+  }
+
+  return familyContextValue
+}
