@@ -1,19 +1,16 @@
-import S from './style.module.css'
+import S from "./style.module.css";
 
 export default function MyPage() {
-
-  const user = null
+  const user = null;
 
   if (user) {
-    return (
-      <p role="status">인증된 사용자만 이용할 수 있습니다.</p>
-    )
+    return <p role="status">인증된 사용자만 이용할 수 있습니다.</p>;
   }
 
   return (
     <div className={S.container}>
       <section className={S.profileCard}>
-        <div className={S.avatar}>{user?.email?.[0].toUpperCase() || 'U'}</div>
+        <div className={S.avatar}>{user?.email?.[0].toUpperCase() || "U"}</div>
 
         <div className={S.info}>
           <h1 className={S.title}>마이 페이지</h1>
@@ -37,10 +34,16 @@ export default function MyPage() {
           </div>
         </div>
 
-        <button type="button" className={S.logoutButton} onClick={handleLogout}>
+        <button
+          type="button"
+          className={S.logoutButton}
+          onClick={() => {
+            console.log("로그아웃");
+          }}
+        >
           로그아웃
         </button>
       </section>
     </div>
-  )
+  );
 }

@@ -8,11 +8,12 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "vanilla-spa": "vite --open ./vanilla-spa/index.html --port 3001"
+    "vanilla-spa": "bun ./vanilla-spa/index.html"
   },
   "dependencies": {
     "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.13.2"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",
