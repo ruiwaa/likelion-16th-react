@@ -1,29 +1,29 @@
-import S from './style.module.css'
+import S from "./style.module.css";
+import type { User } from "@/contexts/AuthContext/type";
 
 interface Props {
-  user?: { name: string } | null
+  user?: User | null;
 }
 
 export default function ProtectedContent({ user }: Props) {
-  
   const handleLogout = () => {
     // 로그아웃 처리합니다. (동기 또는 비동기 방식 검토)
-  }
+  };
 
   return (
-    <section className={S.card}>
+    <section className={S.container}>
       <h2 className={S.title}>인증 시스템</h2>
       <p className={S.description}>
         Context API와 커스텀 훅을 활용한 전역 인증 상태를 관리합니다.
       </p>
 
       <div className={S.grid}>
-        <article className={`${S.statusBox} ${user ? S.statusActive : ''}`}>
-          <h3 className={S.statusTitle}>{user ? '인증 완료' : '인증 필요'}</h3>
+        <article className={`${S.statusBox} ${user ? S.statusActive : ""}`}>
+          <h3 className={S.statusTitle}>{user ? "인증 완료" : "인증 필요"}</h3>
           <p>
             {user
               ? `"${user.name}"님으로 로그인되었습니다.`
-              : '로그인 상태에 따라 이 문구가 바뀝니다.'}
+              : "로그인 상태에 따라 이 문구가 바뀝니다."}
           </p>
           <button
             type="button"
@@ -52,5 +52,5 @@ export default function ProtectedContent({ user }: Props) {
         </div>
       )}
     </section>
-  )
+  );
 }

@@ -1,51 +1,56 @@
-import { useId, useState } from 'react'
-import NameField from './parts/NameField'
-import IdField from './parts/IdField'
-import EmailField from './parts/EmailField'
-import PasswordField from './parts/PasswordField'
-import S from './style.module.css'
+import { useId, useState } from "react";
+import NameField from "./parts/NameField";
+import IdField from "./parts/IdField";
+import EmailField from "./parts/EmailField";
+import PasswordField from "./parts/PasswordField";
+import S from "./style.module.css";
+import { useAuth } from "@/contexts/AuthContext";
 
 // 로그인 테스트 정보를 채우세요.
 const TEST_FORM_STATE = {
-  name: '지훈',
-  id: 'yamoo9',
-  email: 'yamoo9@naver.com',
-  password: 'Qwerty@1',
-}
+  name: "지훈",
+  id: "yamoo9",
+  email: "yamoo9@naver.com",
+  password: "Qwerty@1",
+};
 
 const INITIAL_FORM_STATE = {
-  name: '',
-  id: '',
-  email: '',
-  password: '',
-}
+  name: "",
+  id: "",
+  email: "",
+  password: "",
+};
 
-type FormState = typeof INITIAL_FORM_STATE
-type FormStateKey = keyof FormState
+type FormState = typeof INITIAL_FORM_STATE;
+type FormStateKey = keyof FormState;
 
 export default function LoginForm() {
-  const sectionId = useId()
-  const [formState, setFormState] = useState<FormState>(TEST_FORM_STATE)
-  const [formResetKey, setFormResetKey] = useState(0)
+  const sectionId = useId();
+  const [formState, setFormState] = useState<FormState>(TEST_FORM_STATE);
+  const [formResetKey, setFormResetKey] = useState(0);
 
-  const isSomeInputed = Object.values(formState).some(Boolean)
-  const isAllInputed = Object.values(formState).every(Boolean)
+  const isSomeInputed = Object.values(formState).some(Boolean);
+  const isAllInputed = Object.values(formState).every(Boolean);
 
   const changeFormState = (name: FormStateKey, value: string) => {
-    setFormState({ ...formState, [name]: value })
-  }
+    setFormState({ ...formState, [name]: value });
+  };
+  const { login } = useAuth();
 
   const handleSubmit = (e: React.SubmitEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     // 폼 입력 정보로 로그인을 시도합니다.
-    console.log(formState)
-  }
+    console.log(formState);
+
+    const { id, password, ...userInfo } = formState;
+    login(id, password, userInfo);
+  };
 
   const handleReset = () => {
-    setFormState(INITIAL_FORM_STATE)
-    setFormResetKey((prev) => prev + 1)
-  }
+    setFormState(INITIAL_FORM_STATE);
+    setFormResetKey((prev) => prev + 1);
+  };
 
   return (
     <article className={S.card} aria-labelledby={sectionId}>
@@ -60,7 +65,7 @@ export default function LoginForm() {
             target="_blank"
           >
             인증 API 문서
-          </a>{' '}
+          </a>{" "}
           참고
         </p>
       </header>
@@ -73,19 +78,19 @@ export default function LoginForm() {
       >
         <NameField
           value={formState.name}
-          onChange={(value) => changeFormState('name', value)}
+          onChange={(value) => changeFormState("name", value)}
         />
         <IdField
           value={formState.id}
-          onChange={(value) => changeFormState('id', value)}
+          onChange={(value) => changeFormState("id", value)}
         />
         <EmailField
           value={formState.email}
-          onChange={(value) => changeFormState('email', value)}
+          onChange={(value) => changeFormState("email", value)}
         />
         <PasswordField
           value={formState.password}
-          onChange={(value) => changeFormState('password', value)}
+          onChange={(value) => changeFormState("password", value)}
         />
         <div role="group" className={S.buttonGroup}>
           <button
@@ -106,5 +111,5 @@ export default function LoginForm() {
         </div>
       </form>
     </article>
-  )
+  );
 }
