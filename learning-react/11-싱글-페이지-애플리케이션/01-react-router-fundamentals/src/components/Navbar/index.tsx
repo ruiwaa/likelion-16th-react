@@ -1,30 +1,38 @@
-import MyLink from '../MyLink'
-import S from './style.module.css'
+import { Link } from "react-router-dom";
+import NavLink from "../NavLink";
+import S from "./style.module.css";
+import { useAuth } from "@/contexts";
+import { NAVIGATION_PATH } from "@/configs/navigationPaths";
 
 export default function Navbar() {
-  const user = null
+  // 인증 사용자 정보 가져오기
+  const { user } = useAuth();
 
   return (
     <nav className={S.navbar}>
       <div className={S.wrapper}>
-        <h1 className={S.logo} lang="en">🎬 Movie App</h1>
+        <h1 className={S.logo} lang="en">
+          <Link
+            to={NAVIGATION_PATH.base}
+            className={S.homeLink}
+            aria-label="무비 앱 홈"
+          >
+            🎬 Movie App
+          </Link>
+        </h1>
         <ul className={S.navLinks}>
           <li>
-            <MyLink to="/">홈</MyLink>
-          </li>
-          <li>
-            <MyLink to="/actors">배우</MyLink>
+            <NavLink to={NAVIGATION_PATH.actors}>배우</NavLink>
           </li>
           <li>
             {!user ? (
-              <MyLink to="/login">로그인</MyLink>
+              <NavLink to={NAVIGATION_PATH.login}>로그인</NavLink>
             ) : (
-              <MyLink to="/mypage">마이 페이지</MyLink>
+              <NavLink to={NAVIGATION_PATH.mypage}>마이 페이지</NavLink>
             )}
           </li>
         </ul>
       </div>
     </nav>
-  )
+  );
 }
-

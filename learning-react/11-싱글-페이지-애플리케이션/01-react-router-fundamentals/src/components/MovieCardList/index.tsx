@@ -1,9 +1,9 @@
-import { useMovie } from '../../contexts/MovieContext'
-import MovieCard from '../MovieCard'
-import S from './style.module.css'
+import { useMovies } from "@/contexts";
+import MovieCard from "../MovieCard";
+import S from "./style.module.css";
 
 export default function MovieCardList() {
-  const { movies } = useMovie()
+  const { movies } = useMovies();
 
   return (
     <div className={S.grid}>
@@ -11,5 +11,5 @@ export default function MovieCardList() {
         <MovieCard key={movie.id} movie={movie} />
       ))}
     </div>
-  )
+  );
 }
