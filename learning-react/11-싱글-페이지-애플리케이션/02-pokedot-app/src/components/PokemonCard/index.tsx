@@ -1,9 +1,11 @@
-import { getTypeColor, type Colors } from '@/constants/colors'
-import type { Pokemon } from '@/services/pokemon'
-import S from './style.module.css'
+import { getTypeColor, type Colors } from "@/constants/colors";
+import type { Pokemon } from "@/services/pokemon";
+import S from "./style.module.css";
+import { NAVIGATION } from "@/config/paths";
+import { Link } from "react-router";
 
 interface Props {
-  pokemon: Pokemon
+  pokemon: Pokemon;
 }
 
 /**
@@ -12,7 +14,7 @@ interface Props {
  * - 카드 전체를 클릭하면 해당 포켓몬의 상세 페이지로 이동합니다.
  */
 export default function PokemonCard({ pokemon }: Props) {
-  const { id, name, image, types } = pokemon
+  const { id, name, image, types } = pokemon;
 
   return (
     /* 
@@ -23,8 +25,8 @@ export default function PokemonCard({ pokemon }: Props) {
       - 이 경로는 App.tsx(또는 라우터 설정)의 path="/pokemon/:id"와 매칭됩니다.
       - 참고: https://reactrouter.com/api/components/Link
     */
-    <a
-      href={`/pokemon/${id}`}
+    <Link
+      to={`${NAVIGATION.pokemons}/${id}`}
       className={S.card}
       aria-label={`${name} 상세 정보 보기`}
     >
@@ -41,10 +43,10 @@ export default function PokemonCard({ pokemon }: Props) {
       {/* 포켓몬 정보 영역 */}
       <article className={S.info}>
         <p className={S.id} aria-label="포켓몬 번호">
-          #{id.toString().padStart(3, '0')}
+          #{id.toString().padStart(3, "0")}
         </p>
         <h3 className={S.name}>{name}</h3>
-        
+
         {/* 포켓몬 타입 목록 */}
         <ul className={S.types} aria-label="포켓몬 타입">
           {types.map((type) => (
@@ -58,6 +60,6 @@ export default function PokemonCard({ pokemon }: Props) {
           ))}
         </ul>
       </article>
-    </a>
-  )
+    </Link>
+  );
 }

@@ -1,8 +1,9 @@
+import { NAVIGATION_PATH } from "@/configs/navigationPaths";
 import { useAuth } from "@/contexts";
-import S from "./style.module.css";
 import { useTransition } from "react";
 import { useNavigate } from "react-router-dom";
-import { NAVIGATION_PATH } from "@/configs/navigationPaths";
+import AppTitle from "@/components/AppTitle";
+import S from "./style.module.css";
 
 export default function Login() {
   const { login } = useAuth();
@@ -27,6 +28,7 @@ export default function Login() {
   };
   return (
     <div className={S.page}>
+      <AppTitle subTitle="로그인" />
       <div className={S.box}>
         <h1>로그인</h1>
         <form className={S.form} onSubmit={handleLogin}>

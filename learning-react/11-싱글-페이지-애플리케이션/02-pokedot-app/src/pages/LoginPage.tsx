@@ -1,14 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useCallback, useEffect } from "react";
 
-import { useCallback, useEffect } from 'react'
-
-import { useModal } from '@/contexts/ModalContext'
-import { useAuth } from '@/contexts/AuthContext'
-import { LoginForm, Title } from '@/components'
+import { useModal } from "@/contexts/ModalContext";
+import { useAuth } from "@/contexts/AuthContext";
+import { LoginForm, Title } from "@/components";
+import { useLocation, useNavigate } from "react-router";
 
 export default function LoginPage() {
-  const { login } = useAuth()
-  const { openModal, closeModal, isClosing } = useModal()
+  const { login } = useAuth();
+  const { openModal, closeModal, isClosing } = useModal();
 
   /* 
     [페이지 이동 함수]
@@ -16,7 +15,7 @@ export default function LoginPage() {
     - 예: 로그인 성공 후 메인 페이지로 강제 이동시킬 때 사용합니다.
     - 참고: https://reactrouter.com/api/hooks/useNavigate
   */
-  const navigate = undefined
+  const navigate = useNavigate();
 
   /* 
     [현재 위치 및 상태 정보]
@@ -24,14 +23,14 @@ export default function LoginPage() {
     - 접근 권한이 없는 페이지에서 로그인 페이지로 튕겨났을 때, 원래 가려던 주소(from)를 기억해두는 용도입니다.
     - 참고: https://reactrouter.com/api/hooks/useLocation
   */
-  const location = undefined
+  const location = useLocation();
 
   /* 
     [로그인 후 리다이렉트 경로 설정]
     - 사용자가 원래 방문하려던 페이지(from)가 있다면 그곳으로, 없다면 홈('/')으로 보냅니다.
   */
-  const locationState = undefined
-  const from = locationState || '/'
+  const locationState = location.state?.from;
+  const from = locationState || "/";
 
   /* 
     [로그인 실행 로직]
@@ -40,12 +39,12 @@ export default function LoginPage() {
   */
   const handleLogin = useCallback(
     async (userId: string, password: string) => {
-      await login(userId, password)
+      await login(userId, password);
       // 모달 시스템의 닫기 애니메이션 등을 위해 isClosing 상태를 true로 먼저 전환합니다.
-      closeModal() 
+      closeModal();
     },
     [closeModal, login],
-  )
+  );
 
   /* 
     [화면 진입 시 모달 자동 실행]
@@ -54,21 +53,21 @@ export default function LoginPage() {
   */
   useEffect(() => {
     openModal(
-      '로그인',
+      "로그인",
       <LoginForm
         onLogin={handleLogin}
         defaultUserId="yamoo9"
         defaultPassword="Qwerty@1"
       />,
-    )
+    );
 
     /* 
       [클린업 함수]
       - 사용자가 로그인하지 않고 브라우저 뒤로가기 등을 눌러 페이지를 벗어날 때,
       - 화면에 남아있을 수 있는 로그인 모달을 깨끗하게 정리(닫기)합니다.
     */
-    return () => closeModal()
-  }, [closeModal, handleLogin, openModal])
+    return () => closeModal();
+  }, [closeModal, handleLogin, openModal]);
 
   /* 
     [최종 페이지 전환 로직]
@@ -80,8 +79,9 @@ export default function LoginPage() {
     if (isClosing) {
       // 여기에서 navigate 함수를 실행합니다.
       // ← 로직 추가
+      navigate(from, { replace: true });
     }
-  }, [isClosing])
+  }, [isClosing, from, navigate]);
 
   /* 
     이 컴포넌트는 실제 UI 렌더링보다는 모달 제어와 
@@ -91,5 +91,5 @@ export default function LoginPage() {
     <>
       <Title>로그인</Title>
     </>
-  )
+  );
 }

@@ -1,6 +1,7 @@
 import { useAuth } from "@/contexts";
 import S from "./style.module.css";
 import { useNavigate } from "react-router-dom";
+import AppTitle from "@/components/AppTitle";
 
 export default function MyPage() {
   const { user, logout } = useAuth();
@@ -16,17 +17,17 @@ export default function MyPage() {
   if (!user) {
     return <p role="status">인증된 사용자만 이용할 수 있습니다.</p>;
   }
-
+  const nickname = user?.email.split("@").at(0);
   return (
     <div className={S.container}>
+      <AppTitle subTitle={`${nickname}님의 페이지`} />
       <section className={S.profileCard}>
         <div className={S.avatar}>{user?.email?.[0].toUpperCase() || "U"}</div>
 
         <div className={S.info}>
           <h1 className={S.title}>마이 페이지</h1>
           <p className={S.welcome}>
-            안녕하세요!{" "}
-            <span className={S.email}>{user?.email.split("@").at(0)}</span>님!
+            안녕하세요! <span className={S.email}>{nickname}</span>님!
           </p>
           <p className={S.description}>
             무비 앱의 회원이 되신 것을 환영합니다. <br />
