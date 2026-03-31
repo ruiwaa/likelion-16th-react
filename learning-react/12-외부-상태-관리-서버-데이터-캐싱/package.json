@@ -18,6 +18,7 @@
     "react-dom": "^19.2.4",
     "react-error-boundary": "^6.1.1",
     "react-router-dom": "^7.13.2",
+    "rollup-plugin-visualizer": "^7.0.1",
     "use-immer": "^0.11.0",
     "zustand": "^5.0.12"
   },
@@ -28,6 +29,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
+    "esbuild": "^0.27.4",
     "eslint": "^10.1.0",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
