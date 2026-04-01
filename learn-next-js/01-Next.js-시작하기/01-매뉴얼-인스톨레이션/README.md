@@ -37,19 +37,19 @@ bun add -d prettier prettier-plugin-tailwindcss
 
 ## `package.json` 설정
 
-Next.js에서 자주 사용하는 스크립트를 `package.json` 파일에 추가해야 합니다.
+Next.js에서 자주 사용하는 스크립트를 `package.json` 파일에 추가해야 합니다. 
 아래는 기본적으로 필요한 스크립트입니다.
 
 ```json
 {
   "scripts": {
-    "dev": "next dev", // 개발 서버 실행
-    "build": "next build", // 프로젝트 빌드
-    "start": "next start", // 빌드된 프로젝트 실행
-    "lint": "eslint", // 코드 품질 검사
-    "lint:fix": "eslint --fix", // 코드 품질 문제 자동 수정
-    "format": "prettier . --check", // 전체 코드 스타일 검사
-    "format:fix": "prettier . --write" // 전체 코드 스타일 정렬
+    "dev": "next dev",                  // 개발 서버 실행
+    "build": "next build",              // 프로젝트 빌드
+    "start": "next start",              // 빌드된 프로젝트 실행
+    "lint": "eslint",                   // 코드 품질 검사
+    "lint:fix": "eslint --fix",         // 코드 품질 문제 자동 수정
+    "format": "prettier . --check",     // 전체 코드 스타일 검사
+    "format:fix": "prettier . --write"  // 전체 코드 스타일 정렬
   }
 }
 ```
@@ -71,7 +71,7 @@ const isProduction = process.env.NODE_ENV === 'production'
 const nextConfig: NextConfig = {
   // 더 나은 개발 경험을 위해 React 엄격 모드 활성화
   reactStrictMode: true,
-
+  
   // 컴파일러 옵션 구성
   compiler: {
     // 프로덕션에서 console.log 제거 (개발 중에는 유지)
@@ -83,10 +83,10 @@ export default nextConfig
 ```
 
 - `reactStrictMode`  
-  React의 엄격 모드를 활성화하여 잠재적인 문제를 사전에 감지합니다.
+React의 엄격 모드를 활성화하여 잠재적인 문제를 사전에 감지합니다.
 - `compiler`  
-  Next.js의 컴파일러 설정을 정의합니다.  
-  `removeConsole`: 프로덕션 환경에서 `console.log`를 제거하되, `error`와 `warn`은 유지합니다.
+Next.js의 컴파일러 설정을 정의합니다.  
+`removeConsole`: 프로덕션 환경에서 `console.log`를 제거하되, `error`와 `warn`은 유지합니다.
 
 ---
 
@@ -160,7 +160,7 @@ Tailwind CSS v4의 기능을 활성화하고 기본 테마를 정의합니다.
 **`src/styles/globals.css`**
 
 ```css
-@import 'tailwindcss';
+@import "tailwindcss";
 
 :root {
   --background: #ffffff;
@@ -191,7 +191,9 @@ import '@/styles/globals.css'
 export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html lang="ko-KR">
-      <body className="overflow-y-scroll">{children}</body>
+      <body className="overflow-y-scroll">
+        {children}
+      </body>
     </html>
   )
 }
@@ -206,8 +208,8 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
 ```tsx
 export default function Page() {
   return (
-    <header className="flex min-h-screen flex-col items-center justify-center bg-slate-50">
-      <h1 className="text-4xl font-extralight text-slate-950">안녕 Next.js!</h1>
+    <header className="flex flex-col justify-center items-center min-h-screen bg-slate-50">
+      <h1 className="text-4xl text-slate-950 font-extralight">안녕 Next.js!</h1>
     </header>
   )
 }
@@ -242,38 +244,38 @@ Next.js는 TypeScript를 기본적으로 지원합니다.
 ```json
 {
   "compilerOptions": {
-    "target": "ES2017", // 컴파일 대상 ECMAScript 버전
-    "lib": ["dom", "dom.iterable", "esnext"], // 사용할 라이브러리 (DOM, ESNext 등)
-    "allowJs": true, // JS 파일 사용 허용
-    "skipLibCheck": true, // 라이브러리 타입 검사 건너뛰기
-    "strict": true, // 엄격한 타입 검사 (권장)
-    "noEmit": true, // 컴파일된 파일 출력하지 않기
-    "esModuleInterop": true, // ES 모듈과 CommonJS 호환 설정
-    "module": "esnext", // ES 모듈 사용 (ESNext)
-    "moduleResolution": "bundler", // 모듈 해석 방식 (번들러 기반)
-    "resolveJsonModule": true, // JSON 파일 임포트 허용
-    "isolatedModules": true, // 개별 모듈 단위로 컴파일
-    "jsx": "react-jsx", // React JSX 지원
-    "incremental": true, // 점진적 컴파일 활성화 (빌드 속도 개선)
+    "target": "ES2017",                        // 컴파일 대상 ECMAScript 버전
+    "lib": ["dom", "dom.iterable", "esnext"],  // 사용할 라이브러리 (DOM, ESNext 등)
+    "allowJs": true,                           // JS 파일 사용 허용
+    "skipLibCheck": true,                      // 라이브러리 타입 검사 건너뛰기
+    "strict": true,                            // 엄격한 타입 검사 (권장)
+    "noEmit": true,                            // 컴파일된 파일 출력하지 않기
+    "esModuleInterop": true,                   // ES 모듈과 CommonJS 호환 설정
+    "module": "esnext",                        // ES 모듈 사용 (ESNext)
+    "moduleResolution": "bundler",             // 모듈 해석 방식 (번들러 기반)
+    "resolveJsonModule": true,                 // JSON 파일 임포트 허용
+    "isolatedModules": true,                   // 개별 모듈 단위로 컴파일
+    "jsx": "react-jsx",                        // React JSX 지원
+    "incremental": true,                       // 점진적 컴파일 활성화 (빌드 속도 개선)
     "plugins": [
       {
-        "name": "next" // Next.js 전용 플러그인
+        "name": "next"                         // Next.js 전용 플러그인
       }
     ],
-    "baseUrl": ".", // 절대 경로의 기준 디렉토리 설정
+    "baseUrl": ".",                            // 절대 경로의 기준 디렉토리 설정
     "paths": {
-      "@/*": ["src/*"] // 절대 경로 별칭 설정
+      "@/*": ["src/*"]                         // 절대 경로 별칭 설정
     }
   },
   "include": [
-    "next-env.d.ts", // Next.js 환경 타입 선언 파일 포함
-    "**/*.ts", // 모든 TS 파일 포함
-    "**/*.tsx", // 모든 TSX 파일 포함
-    ".next/types/**/*.ts", // Next.js 타입 선언 파일 포함
-    ".next/dev/types/**/*.ts", // Next.js 개발 타입 선언 파일 포함
-    "**/*.mts" // .mts 파일 포함 (ESM 모듈용)
+    "next-env.d.ts",                           // Next.js 환경 타입 선언 파일 포함
+    "**/*.ts",                                 // 모든 TS 파일 포함
+    "**/*.tsx",                                // 모든 TSX 파일 포함
+    ".next/types/**/*.ts",                     // Next.js 타입 선언 파일 포함
+    ".next/dev/types/**/*.ts",                 // Next.js 개발 타입 선언 파일 포함
+    "**/*.mts"                                 // .mts 파일 포함 (ESM 모듈용)
   ],
-  "exclude": ["node_modules"] // 제외할 디렉토리 (node_modules)
+  "exclude": ["node_modules"]                  // 제외할 디렉토리 (node_modules)
 }
 ```
 
@@ -297,7 +299,12 @@ import nextTs from 'eslint-config-next/typescript'
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts']),
+  globalIgnores([
+    '.next/**',
+    'out/**',
+    'build/**',
+    'next-env.d.ts',
+  ]),
 ])
 
 export default eslintConfig
@@ -324,8 +331,8 @@ my-next-app/
 │       └── globals.css
 ├── package.json
 ├── tsconfig.json
-├── next.config.ts
-├── postcss.config.mjs
+├── next.config.ts     
+├── postcss.config.mjs 
 ├── prettier.config.mjs
 └── eslint.config.mjs
 ```
