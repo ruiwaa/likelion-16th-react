@@ -1,5 +1,5 @@
-import ProjectName from '@/components/project-name'
 import { cn } from '@/utils'
+import { ClientComponent, ServerComponent } from '@/_learn'
 
 export default function MainPage() {
   console.log('서버 컴포넌트')
@@ -30,7 +30,8 @@ export default function MainPage() {
       </header>
       <main>
         {/* 클라이언트 컴포넌트 */}
-        <ProjectName />
+        <ServerComponent />
+        <ClientComponent />
       </main>
     </div>
   )

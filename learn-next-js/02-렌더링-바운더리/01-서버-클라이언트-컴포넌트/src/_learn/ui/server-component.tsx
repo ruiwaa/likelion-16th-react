@@ -1,10 +1,14 @@
 import { cn } from '@/utils'
-import { type SystemInfo } from '@/functions/get-system-info'
+import { getSystemInfo, type SystemInfo } from '@/functions/get-system-info'
+import { getSecretKey } from '@/functions/get-secret-key'
 
 export default function ServerComponent() {
-  
-  // 서버 시스템 정보 가져오기
-  const serverInfo: SystemInfo = [] 
+  // 서버 컴퓨터의 시스템 정보 가져오기
+  const serverInfo: SystemInfo = getSystemInfo()
+
+  // 노출되면 안되는 민간함 정보 (API KEY, TOKEN 등)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const secretKey = getSecretKey()
 
   return (
     <section
@@ -60,7 +64,6 @@ export default function ServerComponent() {
           </dl>
         )}
       </div>
-
     </section>
   )
 }
