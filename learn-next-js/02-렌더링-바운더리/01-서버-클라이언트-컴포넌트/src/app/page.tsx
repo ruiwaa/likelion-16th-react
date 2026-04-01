@@ -1,6 +1,9 @@
+import ProjectName from '@/components/project-name'
 import { cn } from '@/utils'
 
-export default function Page() {
+export default function MainPage() {
+  console.log('서버 컴포넌트')
+
   return (
     <div
       className={cn(
@@ -26,7 +29,8 @@ export default function Page() {
         </h1>
       </header>
       <main>
-        
+        {/* 클라이언트 컴포넌트 */}
+        <ProjectName />
       </main>
     </div>
   )
