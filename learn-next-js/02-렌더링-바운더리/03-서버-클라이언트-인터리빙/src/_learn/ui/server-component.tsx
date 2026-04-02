@@ -19,8 +19,8 @@ export default async function ServerComponent({ className }: Props) {
         <ServerIcon className="size-4.5 text-blue-600" />
         <h3
           className={cn(
-            'leading-none font-semibold tracking-tight text-blue-700 mb-1',
-            'dark:text-blue-400 text-xl',
+            'mb-1 leading-none font-semibold tracking-tight text-blue-700',
+            'text-xl dark:text-blue-400',
           )}
         >
           서버 컴포넌트
@@ -28,7 +28,8 @@ export default async function ServerComponent({ className }: Props) {
       </header>
 
       <p className="text-muted-foreground text-sm leading-relaxed">
-        이 영역은 서버에서 렌더링되어 HTML로 전달되었습니다.<br />
+        이 영역은 서버에서 렌더링되어 HTML로 전달되었습니다.
+        <br />
         클라이언트 번들에 포함되지 않아 성능 최적화에 유리합니다.
       </p>
 
@@ -40,10 +41,8 @@ export default async function ServerComponent({ className }: Props) {
       >
         렌더링 타임: {new Date().toISOString()}
       </div>
-      
-      <div className="mt-5">
-        {/* 클라이언트 컴포넌트를 삽입해보세요. */}
-      </div>
+
+      <div className="mt-5">{/* 클라이언트 컴포넌트를 삽입해보세요. */}</div>
     </section>
   )
 }
