@@ -1,9 +1,13 @@
-import { ClientComponent, ServerComponent } from '@/_learn'
+import { ClientComponent, InterleavingDemo, ServerComponent } from '@/_learn'
 
 import { cn } from '@/utils'
-import Cart from '@/components/cart' // 서버 컴포넌트
-import Modal from '@/components/modal' // 클라이언트 컴포넌트
+//import Cart from '@/components/cart' // 서버 컴포넌트
+//import Modal from '@/components/modal' // 클라이언트 컴포넌트
 
+// learn. 렌더링 경계 그리고 인터리빙 시 주의할 점
+// - 클라이언트 컴포넌트 내부에 직접 서버 컴포넌트 포함하면 안됨
+// - props.children 패턴 사용 (외부에서 클라이언트 컴포넌트의 자식 컴포넌트로 서버 컴포넌트 설정)
+// - 자식으로 포함하는 서버 컴포넌트가 비동기 컴포넌트인 경우, 오류 발생 가능성
 export default function Page() {
   // 서버 컴포넌트 또는 클라이언트 컴포넌트에 서로를 포함해보세요.
   // 어떤 일이 일어나는지 확인하고, 문제가 발생한다면 해결 방법도 살펴봅시다.
@@ -15,7 +19,7 @@ export default function Page() {
         'bg-background min-h-screen',
       )}
     >
-      <header hidden>
+      <header>
         <h1
           className={cn(
             'text-foreground text-center text-4xl font-extralight',
@@ -35,11 +39,11 @@ export default function Page() {
 
       <main className="flex flex-col gap-5">
         {/* 클라이언트 컴포넌트 (동기 처리, 이벤트 핸들링, 상태 관리 등) */}
-        <Modal>
-          {/* 서버 컴포넌트 (비동기 처리, 사전 렌더링, 서버 데이터 가져오기 등) */}
-          <Cart />
-        </Modal>
-
+        {/* <Modal> */}
+        {/* 서버 컴포넌트 (비동기 처리, 사전 렌더링, 서버 데이터 가져오기 등) */}
+        {/* <Cart /> */}
+        {/* </Modal> */}
+        <InterleavingDemo />
         <ClientComponent hidden>
           {/* <slot></slot> <- props.children */}
           <ServerComponent />
