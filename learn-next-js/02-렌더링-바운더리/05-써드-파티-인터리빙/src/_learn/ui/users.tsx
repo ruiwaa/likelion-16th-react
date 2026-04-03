@@ -1,8 +1,24 @@
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
+
 import { cn } from '@/utils'
 import { UserList } from './user-list'
+import { getUsers } from '../api/users'
+import { getQueryClient } from '@/functions/query-client'
 
 export default async function Users() {
-  
+  // 서버 컴포넌트
+  // QueryClient를 사용(요청)할 때마다 생성
+  const queryClient = getQueryClient()
+
+  // 생성된 queryClient 객체를 사용해 API 서버에서 프리페칭(prefetch)
+  await queryClient.prefetchQuery({
+    queryKey: ['users'],
+    queryFn: getUsers,
+  })
+
+  // 클라이언트 측 queryClient에 보낼 프리페칭해 캐싱된 데이터를 압축
+  const dehydratedState = dehydrate(queryClient)
+
   return (
     <section className="mx-auto max-w-md space-y-8 p-8">
       <header className="space-y-4">
@@ -27,7 +43,9 @@ export default async function Users() {
           'shadow-[0_8px_30px_rgb(0,0,0,0.04)]',
         )}
       >
-        <UserList />
+        <HydrationBoundary state={dehydratedState}>
+          <UserList />
+        </HydrationBoundary>
       </div>
     </section>
   )
