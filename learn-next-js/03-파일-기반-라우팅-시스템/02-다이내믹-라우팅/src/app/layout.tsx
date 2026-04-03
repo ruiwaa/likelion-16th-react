@@ -8,7 +8,6 @@ import SiteInfo from '@/components/ui/site-info'
 import '@/styles/globals.css'
 import { QueryProvider } from './contexts/query-context'
 
-
 const notoSansKR = Noto_Sans_KR({ variable: '--font-noto' })
 
 export const metadata: Metadata = {
@@ -22,19 +21,18 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
       <body
         className={cn(
           notoSansKR.variable,
+          'flex flex-col',
           'min-h-screen overflow-y-scroll',
           'bg-background text-foreground antialiased',
           'selection:bg-foreground selection:text-background',
           'focus:outline-none',
-          '[&_*:focus-visible]:ring-2 [&_*:focus-visible]:ring-foreground [&_*:focus-visible]:ring-offset-2',
-          '[&_*:focus-visible]:ring-offset-background'
+          '[&_*:focus-visible]:ring-foreground [&_*:focus-visible]:ring-2 [&_*:focus-visible]:ring-offset-2',
+          '[&_*:focus-visible]:ring-offset-background',
         )}
       >
         <QueryProvider hideDevtools>
           <Navbar />
-          <main className={cn('container mx-auto px-6')}>
-            {children}
-          </main>
+          <main className={cn('container mx-auto grow px-6')}>{children}</main>
           <SiteInfo />
         </QueryProvider>
       </body>
