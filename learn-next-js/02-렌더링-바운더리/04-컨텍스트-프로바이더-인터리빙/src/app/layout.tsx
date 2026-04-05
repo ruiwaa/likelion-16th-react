@@ -4,7 +4,7 @@ import { cn } from '@/utils'
 import '@/styles/globals.css'
 import { ToastProvider } from '@/contexts/toast-context'
 
-// learn. 컨테스트 프로바이더 인터리빙
+// 컨테스트 프로바이더 인터리빙
 // - `children`으로 외부에서 추가된 서버 컴포넌트는 서버 렌더링 경계 유지
 // - 클라이언트 컴포넌트 내부에 직접 포함된 서버 컴포넌트는 클라이언트 컴포넌트화
 

@@ -3,7 +3,7 @@
 
 //Node.js 모듈 읽어오기
 
-import fs from 'node:fs/promises'
+import fs from 'node:fs/promises' //  FileSystem의 약자로, 파일 입출력 처리를 할 때 사용됨
 import prcess from 'node:process'
 
 import path from 'node:path'
@@ -16,7 +16,8 @@ const dataPath = path.join(prcess.cwd(), 'src/data/likes.json')
 export async function readLikes() {
   try {
     const jsonString = await fs.readFile(dataPath, { encoding: 'utf-8' })
-    const data = JSON.parse(jsonString) as { count: number }
+    // node.js는 문자열을 유니코드로 처리하여, 데터를 주고받거나 저장할 때 'utf-8'을  기본으로 사용
+    const data = JSON.parse(jsonString) as { count: number } // JSON.parse 이용하여 서버가 실제로 다룰 수 있는 객체로 변환
     return data.count
   } catch {
     return 0

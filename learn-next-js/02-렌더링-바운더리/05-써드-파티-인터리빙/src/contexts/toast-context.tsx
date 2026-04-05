@@ -30,10 +30,10 @@ const ToastContext = createContext<ToastContextType | undefined>(undefined)
 /**
  * @component ToastProvider
  * @description 애플리케이션 최상단(layout.tsx)에서 사용하며, 토스트 알림의 상태와 UI를 관리합니다.
- * 
+ *
  * @example
  * // layout.tsx 에서 적용
- * 
+ *
  * export default function RootLayout({ children }: React.PropsWithChildren) {
  *   return (
  *     <html lang="ko-KR">
@@ -50,6 +50,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([])
 
   /** 새로운 토스트를 생성하고 3초 후 자동으로 제거하는 함수 */
+  // useCallback을 사용하게 되면 같은 함수를 재사용 가능
   const toast = useCallback(
     (title: string, description?: string, type: ToastType = 'info') => {
       const id = Date.now()
@@ -131,36 +132,49 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
 function ToastIcon({ type }: { type: ToastType }) {
   switch (type) {
     case 'success':
-      return <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-500" aria-hidden="true" />
+      return (
+        <CheckCircle2
+          className="h-5 w-5 shrink-0 text-emerald-500"
+          aria-hidden="true"
+        />
+      )
     case 'error':
-      return <AlertCircle className="h-5 w-5 shrink-0 text-red-500" aria-hidden="true" />
+      return (
+        <AlertCircle
+          className="h-5 w-5 shrink-0 text-red-500"
+          aria-hidden="true"
+        />
+      )
     default:
-      return <Info className="h-5 w-5 shrink-0 text-blue-500" aria-hidden="true" />
+      return (
+        <Info className="h-5 w-5 shrink-0 text-blue-500" aria-hidden="true" />
+      )
   }
 }
 
 /**
  * useToast 훅
- * 
+ *
  * 컴포넌트 내부에서 토스트를 호출하기 위한 커스텀 훅입니다.
- * 
+ *
  * @example
  * 'use client'
- * 
+ *
  * import { useToast } from '@/contexts/toast-context'
- * 
+ *
  * export function OrderButton() {
  *   const { toast } = useToast()
- * 
+ *
  *   const handleClick = () => {
  *     toast('주문 완료', '성공적으로 주문되었습니다.', 'success')
  *   }
- * 
+ *
  *   return <button type="button" onClick={handleClick}>주문하기</button>
  * }
  */
 export const useToast = () => {
   const context = use(ToastContext)
-  if (!context) throw new Error('useToast 훅은 ToastProvider 내부에서만 사용 가능합니다.')
+  if (!context)
+    throw new Error('useToast 훅은 ToastProvider 내부에서만 사용 가능합니다.')
   return context
 }

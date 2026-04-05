@@ -6,7 +6,7 @@ import { cn } from '@/utils'
 /** 알림의 성격에 따른 타입 정의 */
 type ToastType = 'success' | 'error' | 'info'
 
-/** 개별 토스트 객체의 구조 */
+/** 개별 토스트 객체의 구조 (내부적으로 토스트 목록을 관리할 때 사용)*/
 interface Toast {
   id: number
   title: string
@@ -15,6 +15,7 @@ interface Toast {
 }
 
 /** Context를 통해 외부로 노출될 함수 타입 */
+// 외부 컴포넌트에서 꺼내 쓸 때 보여지는 타입
 interface ToastContextType {
   /**
    * @param title - 알림의 제목
@@ -45,6 +46,7 @@ const ToastContext = createContext<ToastContextType | undefined>(undefined)
  *   )
  * }
  */
+
 export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([])
 
