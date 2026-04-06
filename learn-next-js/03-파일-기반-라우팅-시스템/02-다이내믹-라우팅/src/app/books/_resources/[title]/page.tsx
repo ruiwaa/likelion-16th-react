@@ -1,18 +1,19 @@
 import { notFound } from 'next/navigation'
-import { Book, books } from '../_resources/data'
+import { books } from '../../_resources/data'
 
-interface Props {
-  params: Promise<{ title: Book['title'] }>
-}
-
-export default async function BookDetailPage({ params }: Props) {
-  const title = (await params).title
-  // console.log(title) // 인코딩(encoding)된 도서 제목
+export default async function BookDetailPage({
+  params,
+}: PageProps<'/books/[pubdate]/[title]'>) {
+  const { pubdate, title } = await params
   const decodedTitle = decodeURIComponent(title)
-  // console.log(decodedTitle) // 디코딩(decoding)된 도서 제목
 
-  // 제목으로 도서 찾기
-  const book = books.find((book) => book.title === decodedTitle)
+  // 제목과 출간일로 도서 찾기
+  const book = books.find(
+    (book) => book.title === decodedTitle && book.pubdate === pubdate,
+  )
+
+  // 서버에서 찾은 도서가 있는지 여부 확인
+  console.log(book)
 
   // 도서를 찾을 수 없으면 Not Found 페이지로 이동
   if (!book) notFound()

@@ -4,7 +4,11 @@ import { cn } from '@/utils'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 /* 이름순, 출판일순, ISBN순 정렬(오름차순,내림차순) 기능 구현 */
-function SortOrder() {
+
+// 클라이언트 컴포넌트여서, 훅함수 사용 가능.
+// inteface 추가 안 시키고 진행 가능
+
+function SortOrderClient() {
   // 페이지 컴포넌트가 아닌, 클라이언트 컴포넌트에서
   // 상위(페이지) 컴포넌트의 props를 전달받지 않고
   // 검색 매개변수(search params)를 가져오는 방법
@@ -48,4 +52,4 @@ function SortOrder() {
   )
 }
 
-export default SortOrder
+export default SortOrderClient
