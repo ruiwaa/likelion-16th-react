@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState } from 'react'
 import { LucideMousePointer2 } from 'lucide-react'
 
@@ -8,7 +10,6 @@ import { Spinner } from '@/components/ui/spinner'
 import { isErrorObject } from '@/utils'
 
 export default function ClientSidePage() {
-  
   const [data, setData] = useState<Pokemon[] | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
@@ -66,7 +67,8 @@ export default function ClientSidePage() {
         </h1>
         <p className="mt-2 flex items-center gap-3 text-sm text-slate-500">
           <LucideMousePointer2 className="size-5" />
-          브라우저 마운트 후 데이터를 호출하며, 로딩 및<br className='md:hidden' />
+          브라우저 마운트 후 데이터를 호출하며, 로딩 및
+          <br className="md:hidden" />
           에러 상태를 컴포넌트 내부에서 실시간으로 제어합니다.
         </p>
       </header>
