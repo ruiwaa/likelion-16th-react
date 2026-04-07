@@ -97,7 +97,7 @@ export default async function BooksPage({ searchParams }: PageProps<'/books'>) {
         })}
       </nav>
 
-      <div className="flex gap-3 rounded-xl border p-2">
+      <div className="flex justify-center gap-3 rounded-xl border p-2">
         {Array.from({ length: pagination.totalPages }).map((_, index) => {
           const pageIndex = index + 1
           const isActive = pageIndex === Number(page)

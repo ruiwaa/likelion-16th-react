@@ -25,7 +25,7 @@ export function Navbar() {
         <div className="flex items-center gap-4 text-sm font-bold">
           {/* Docs 링크 */}
           <Link
-            href="/docs/기초"
+            href={`/docs/${encodeURIComponent('기초')}`}
             className={cn(
               'flex items-center gap-1.5 rounded-full border px-4 py-2 transition-all duration-200',
               isDocsActive
