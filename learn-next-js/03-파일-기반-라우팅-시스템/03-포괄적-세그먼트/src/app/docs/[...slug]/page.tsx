@@ -48,6 +48,22 @@ const getNextStep = (depth: number) => {
       },
     ]
   }
+  if (depth === 3) {
+    return [
+      {
+        title: '구름이',
+        path: '구룽이-라우팅',
+        icon: Layers,
+        desc: 'URL 파라미터를 활용한 유연한 페이지 생성 기법',
+      },
+      {
+        title: '치즈',
+        path: '꼬순-레이아웃',
+        icon: Layers,
+        desc: '상위 구조를 유지하며 콘텐츠만 교체하는 방법',
+      },
+    ]
+  }
   return []
 }
 
@@ -71,7 +87,9 @@ export default async function DocsPage({ params }: PageProps) {
         </Link>
 
         {decodedSlug.map((segment, index) => {
+          // index 배열의 마지막index가 표시되어야 하므로 index -1
           const isLast = index === decodedSlug.length - 1
+          // 0부터 index의 길이까지 복제 후에 '/'문자열 포함된 배열로 만들어줌 => 현재 index까지만 나타냄
           const href = `/docs/${slug.slice(0, index + 1).join('/')}`
           return (
             <Fragment key={index}>
@@ -96,7 +114,7 @@ export default async function DocsPage({ params }: PageProps) {
       <header className="space-y-5">
         <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-[11px] font-black tracking-widest text-blue-600 uppercase">
           <FileText className="h-3.5 w-3.5" />
-          <span>Step {depth} / 3</span>
+          <span>Step {depth} / 4</span>
         </div>
         <h1 className="text-5xl font-black tracking-tighter text-slate-900 md:text-6xl">
           {lastTitle}
