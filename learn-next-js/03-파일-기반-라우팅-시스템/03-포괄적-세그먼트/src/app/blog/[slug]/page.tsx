@@ -10,7 +10,6 @@ export default function BlogPostPage({ params }: PageProps<'/blog/[slug]'>) {
   // 이런 경우, 동적 세그먼트 값을 읽으려면 두 가지 방법이 있음
   // 방법 1. React.use() 함수 활용
   const { slug } = use(params)
-
   // 방법 2. Next.js의 useParams 훅 함수 활용
   const pageParams = useParams<{ slug: string }>()
   console.log(pageParams.slug)
