@@ -1,19 +1,24 @@
-import { LucideMousePointer2, LucideServer } from 'lucide-react'
+import {
+  LucideDatabase,
+  LucideHourglass,
+  LucideMousePointer2,
+  LucideServer,
+} from 'lucide-react'
 
 import LinkCard from '@/components/ui/link-card'
 import { cn } from '@/utils'
 
 /**
  * [Next.js 데이터 페칭 및 렌더링]
- * 
+ *
  * 클라이언트 컴포넌트 (CSR)
  * - 브라우저 상호작용(onClick, useState 등)이 필요할 때 사용.
  * - 참고: https://nextjs.org/docs/app/building-your-application/rendering/client-components
- * 
+ *
  * 서버 컴포넌트 (SSR/RSC)
  * - 서버에서 직접 데이터 조회, 보안 및 성능 최적화에 유리.
  * - 참고: https://nextjs.org/docs/app/building-your-application/rendering/server-components
- * 
+ *
  * 데이터 페칭 전략
  * - 참고: https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating
  */
@@ -36,11 +41,27 @@ export default function MainPage() {
         />
         <LinkCard
           color="emerald"
-          href="/client-side"
+          href="/server-side"
           title="서버 사이드 (SSR)"
           actionLabel="서버 측 데이터 페칭"
           description={''}
           icon={LucideServer}
+        />
+        <LinkCard
+          color="rose"
+          href="/orm-database"
+          title="ORM (SSR)"
+          actionLabel="서버 측 데이터 페칭 (ORM 사용)"
+          description={''}
+          icon={LucideDatabase}
+        />
+        <LinkCard
+          color="amber"
+          href="/server-side-with-use"
+          title="서버 → 클라이언트 Promise 전달"
+          actionLabel="스트리밍(Streaming) 하기"
+          description={''}
+          icon={LucideHourglass}
         />
       </section>
     </div>
