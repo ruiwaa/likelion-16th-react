@@ -1,6 +1,6 @@
 export default function Statistics() {
   return (
-    <div className="flex h-100 flex-col gap-1 bg-zinc-200 p-5">
+    <div className="flex h-110 flex-col gap-1 bg-zinc-200 p-5">
       <h2 className="text-2xl font-bold text-zinc-700">통계 {'(default)'}</h2>
       <div className="flex flex-col gap-4">
         <span className="text-xs text-zinc-800">
