@@ -49,20 +49,37 @@ export const metadata: Metadata = {
   -----------------------------------------------------------------------------------
 */
 
-
-export default function RootLayout({ children }: React.PropsWithChildren) {
+/**
+ * 네 개의 슬롯(@children, @auth,  @chart, @statistics)을
+ * layout.tsx에서는 아래와 같이 받아 배치한다.
+ *
+ */
+export default function RootLayout({
+  children,
+  auth,
+  chart,
+  statistics,
+}: {
+  children: React.ReactNode
+  auth: React.ReactNode
+  chart: React.ReactNode
+  statistics: React.ReactNode
+}) {
   return (
     <html lang="ko-KR">
       <body
         className={cn(
           notoSansKR.variable,
-          'min-h-screen overflow-y-scroll', 
+          'min-h-screen overflow-y-scroll',
           'flex flex-col bg-white font-sans text-slate-900 antialiased',
         )}
       >
         <Navbar />
-        <main className="mx-auto flex w-full grow max-w-5xl flex-col px-6 py-8 lg:py-12">
+        <main className="mx-auto flex w-full max-w-5xl grow flex-col px-6 py-8 lg:py-12">
           {children}
+          {chart}
+          {statistics}
+          {auth}
         </main>
         <Footer />
       </body>

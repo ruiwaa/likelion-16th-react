@@ -16,7 +16,7 @@ export default async function TagBasedRevalidationPage() {
     `${process.env.NEXT_PUBLIC_MOCK_API_URL}/pokemon`,
     {
       next: {
-        tags: ['pokemons'],
+        tags: ['pokemons'], // 태그 기반, 해당 태그가 revalidateTag()로 호출되면 새로 가져옴, 그 전까지는 캐시 사용
       },
     },
   )

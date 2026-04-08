@@ -6,11 +6,11 @@ export default function AuthLogin() {
       <div
         role="dialog"
         aria-modal="true"
-        className="flex h-110 flex-col gap-2 bg-indigo-50 p-5 shadow-2xl"
+        className="flex h-110 flex-col gap-3 bg-indigo-50 p-5 shadow-2xl"
       >
         <button
           type="button"
-          className="w-fit bg-indigo-200 px-2"
+          className="w-fit self-end bg-indigo-200 px-4 text-base"
           onClick={() => window.history.back()}
         >
           닫기

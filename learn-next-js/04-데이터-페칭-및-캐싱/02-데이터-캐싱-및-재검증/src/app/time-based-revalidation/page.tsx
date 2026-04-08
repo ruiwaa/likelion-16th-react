@@ -16,7 +16,7 @@ export default async function TimeBasedRevalidationPage() {
     // cache: 'no-store'  기본적으로 기억하지 않음
     cache: 'force-cache', // 개발자가 요청/응답 결과를 캐시(기억) 설정
     next: {
-      revalidate: 3600, //1분마다 다시 재검증
+      revalidate: 60, //1분마다 다시 재검증을 하여 서버에서 새로 가져옴, 그 전까지는 캐시 사용
     },
   })
   // 60초마다 데이터의 유효성을 검사하도록 설정
