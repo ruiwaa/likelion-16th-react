@@ -5,14 +5,20 @@ import { PokemonList } from '@/components/ui/pokemon-list'
 import { Pokemon } from '@/types/pokemon'
 
 export default async function HybridRevalidationPage() {
-  
   /**
    * [Next.js 15/16 하이브리드 재검증 전략]
    * 1. 시간 기반(ISR): 60초마다 백그라운드에서 자동으로 데이터를 갱신합니다.
-   * 2. 주문형(On-demand): 'pokemons' 태그를 사용하여 60초가 지나지 않았더라도 
+   * 2. 주문형(On-demand): 'pokemons' 태그를 사용하여 60초가 지나지 않았더라도
    *    Server Action(revalidateTag)을 통해 즉시 수동 갱신이 가능합니다.
    */
-  const response = await fetch(`${process.env.MOCK_API_URL}/pokemon`)
+  const response = await fetch(`${process.env.MOCK_API_URL}/pokemon`, {
+    cache: 'force-cache',
+    next: {
+      revalidate: 3600,
+      //수동 갱신을 위한  태그 설정
+      tags: ['pokemons'],
+    },
+  })
   // - 60초 자동 갱신
   // - 수동 갱신을 위한 태그 설정
 
@@ -44,7 +50,7 @@ export default async function HybridRevalidationPage() {
             </p>
           </div>
         </div>
-        
+
         <RevalidateHybridButton />
       </header>
 
