@@ -6,7 +6,7 @@ export default function DashboardPage() {
       <h1 className="text-2xl font-bold text-rose-700">/dashboard 페이지 {'{children}'}</h1>
       <span className="text-sm text-rose-800">(src/app/dashboard/page.tsx)</span>
       <div>
-        <Link href="/dashboard/login" className='p-2 px-4 rounded-full bg-rose-200'>로그인 폼</Link>
+        <Link href="/dashboard-intercept/login" className='p-2 px-4 rounded-full bg-rose-200'>로그인 폼</Link>
       </div>
     </section>
   )
