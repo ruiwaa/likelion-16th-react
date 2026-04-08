@@ -10,13 +10,13 @@ export function RevalidatePathButton() {
   const [isPending, startTransition] = useTransition()
 
   const handleRevalidate = () => {
-    if (isPending) return 
+    if (isPending) return
 
     startTransition(async () => {
       try {
         await wait(600)
-        await revalidatePokemonPath()
-        console.log('Next.js 16 캐시가 성공적으로 무효화되었습니다.')
+        const { success } = await revalidatePokemonPath()
+        console.log('Next.js 16 캐시가 성공적으로 무효화되었습니다.', success)
       } catch (error) {
         console.error('재검증 실패:', error)
         console.log('캐시 무효화 중 오류가 발생했습니다.')
@@ -43,7 +43,9 @@ export function RevalidatePathButton() {
       ) : (
         <RefreshCw className="size-4 text-blue-500" />
       )}
-      <span>{isPending ? '캐시 갱신 중...' : '경로 기반 데이터 즉시 갱신'}</span>
+      <span>
+        {isPending ? '캐시 갱신 중...' : '경로 기반 데이터 즉시 갱신'}
+      </span>
     </button>
   )
 }

@@ -6,17 +6,12 @@ import { Spinner } from '@/components/ui/spinner'
 /**
  * [서버 컴포넌트 데이터 페칭]
  *
- * - 직접적인 데이터 접근 : 서버에서 API를 호출하므로 API Key 등 민감한 정보를 안전하게 다룰 수 있습니다.
- * - 제로 번들 사이즈 : 페칭 로직이 브라우저로 전송되지 않아 클라이언트 자바스크립트 부담이 줄어듭니다.
- * - SEO 최적화 : 데이터가 포함된 완성된 HTML이 브라우저에 도달하여 검색 엔진 노출에 유리합니다.
+ *
  */
 
 const pokemonApiUrl = `${process.env.MOCK_API_URL}/pokemon`
 
 export default function ServerSideWithUsePage() {
-  // 서버 컴포넌트는 async/await를 사용하여 컴포넌트 수준에서 직접 데이터를 호출합니다.
-  // 에러 핸들링: 서버에서 응답 상태를 확인하고 실패 시 에러를 던집니다.
-  // JSON 파싱: 서버 환경에서 데이터를 객체 형태로 변환합니다.
   const pokemonPromise = fetch(pokemonApiUrl).then(
     (response) => response.json(), // 스트리밍으로 클라이언트 컴포넌트에 전달한 데이터 직렬화 필수 !!
   )
@@ -26,7 +21,7 @@ export default function ServerSideWithUsePage() {
       <header className="border-b border-b-slate-200 pb-4">
         <h1 className="flex items-center gap-2 text-2xl font-bold text-slate-800">
           <span className="h-8 w-1 rounded-full bg-blue-500" />
-          서버 사이드 데이터 페칭
+          서버에서 클라이언트로 데이터 전달하기
         </h1>
         <p className="mt-2 flex items-center gap-3 text-sm text-slate-500">
           <LucideServer className="size-4" />
