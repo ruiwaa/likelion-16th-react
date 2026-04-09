@@ -6,10 +6,12 @@ import { cn } from '@/utils'
 /**
  * [Next.js 16 렌더링 전략 및 재검증]
  *
+ * - 렌더링된 페이지를 기억하는 전략에 대해서 배우는 챕터ㄴ
+ *
  * 정적 렌더링 (Static Rendering) — 기본
  * - 특징: 빌드 시점에 딱 한 번 생성
  * - 장점: 속도가 가장 빠름 (CDN 캐싱)
- * - 용도: 변하지 않는 소개 페이지, 블로그 포스트 등
+ * - 용도: 변하지 않는 회사 소개 페이지, 블로그 포스트 등
  * - 설정: export const dynamic = 'force-static'
  * - 참고: https://nextjs.org/docs/app/guides/caching-without-cache-components#route-segment-config
  *
