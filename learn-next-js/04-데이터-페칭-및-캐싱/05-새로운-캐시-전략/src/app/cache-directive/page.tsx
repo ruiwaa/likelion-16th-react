@@ -6,7 +6,9 @@ import {
 } from 'lucide-react'
 
 import { cn, wait } from '@/utils'
-
+import { Suspense } from 'react'
+import { Spinner } from '@/components/ui/spinner'
+import { cacheLife } from 'next/cache'
 
 export default function CacheDirectivePage() {
   return (
@@ -24,8 +26,12 @@ export default function CacheDirectivePage() {
       </header>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <DynamicDataCard />
-        <CachedDataCard />
+        <Suspense fallback={<Spinner />}>
+          <DynamicDataCard />
+        </Suspense>
+        <Suspense fallback={<Spinner />}>
+          <CachedDataCard />
+        </Suspense>
       </div>
 
       <div className="rounded-2xl border border-blue-100 bg-blue-50/50 p-6">
@@ -59,6 +65,8 @@ async function getDynamicData() {
 
 // 캐싱이 적용된 함수
 async function getCachedData() {
+  'use cache'
+  cacheLife('minutes')
   await wait(300)
 
   return {
@@ -99,6 +107,7 @@ async function DynamicDataCard() {
 
 // 캐시된 데이터 카드 컴포넌트
 async function CachedDataCard() {
+  'use cache'
   const data = await getCachedData()
 
   return (

@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
    * - cacheLife()를 통한 정교한 수명 제어 가능
    * - cacheTag()를 통한 태그 기반 무효화 가능
    */
-
+  cacheComponents: true,
   /**
    * React 엄격 모드 (Strict Mode) 활성화
    * - 잠재적인 문제를 조기에 발견하기 위해 생명주기 메서드 등을 이중으로 호출합니다.
