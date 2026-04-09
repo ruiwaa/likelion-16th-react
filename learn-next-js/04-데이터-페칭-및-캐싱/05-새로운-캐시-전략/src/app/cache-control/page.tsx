@@ -142,6 +142,8 @@ async function ShortLivedSection() {
 // 태그 기반 무효화(cacheTag) 시연 컴포넌트
 async function TaggedDataSection() {
   const taggedData = await getTaggedData()
+  // 여기의 데이터에 태그와 서버함수의 업데이트 태그명이 일치하므로,
+  // 이전의 캐시를 무효화 시킴
 
   return (
     <section className="space-y-4">
