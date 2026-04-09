@@ -7,6 +7,9 @@ import {
 } from 'lucide-react'
 
 import { cn } from '@/utils'
+import { Suspense } from 'react'
+import { Spinner } from '@/components/ui/spinner'
+import { cacheLife, cacheTag, updateTag } from 'next/cache'
 
 export default function CacheControlPage() {
   return (
@@ -24,12 +27,16 @@ export default function CacheControlPage() {
       </header>
 
       <div className="grid grid-cols-1 gap-8">
-        <ShortLivedSection />
-        <TaggedDataSection />
+        <Suspense fallback={<Spinner />}>
+          <ShortLivedSection />
+        </Suspense>
+        <Suspense>
+          <TaggedDataSection />
+        </Suspense>
       </div>
 
       <div className="flex justify-center pt-4">
-        <form action="/cache-control">
+        <form action={updateProfileCache}>
           <button
             type="submit"
             className={cn(
@@ -66,12 +73,22 @@ export default function CacheControlPage() {
   )
 }
 
+/* [서버 액션] ----------------------------------------------------------------- */
+const updateProfileCache = async () => {
+  'use server' // 이 코드는 서버에서 실행하는 함수임을 선언
+  // revalidateTag('user-profile', 'default') // -> 업데이트 확인이 안됨
+  updateTag('user-profile')
+}
+
 /* [데이터 로직] ----------------------------------------------------------------- */
 
 // [시간 기반 캐싱]
 // - 특정 시간이 지나면 자동으로 캐시가 만료됨
 // - 수명이 짧은 캐시 (예: 실시간 시세 등)
 async function getShortLivedData() {
+  'use cache'
+  cacheLife('seconds')
+
   return new Date().toLocaleTimeString()
 }
 
@@ -79,6 +96,8 @@ async function getShortLivedData() {
 // - 특정 이름(태그)을 붙여두고, 필요할 때 수동으로 무효화함
 // - 태그가 지정된 캐시 (예: 사용자 프로필 등)
 async function getTaggedData() {
+  'use cache'
+  cacheTag('user-profile')
   return {
     time: new Date().toLocaleTimeString(),
     tag: 'user-profile',
