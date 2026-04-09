@@ -10,20 +10,37 @@ import {
 
 import { useInput } from '@/hooks'
 import { cn } from '@/utils'
+import { useState, useTransition } from 'react'
+import { createItemAction } from '@/server-actions/create-item-action'
 
 export default function ClientSidePage() {
-  
   // 폼 상태를 클라이언트 측 메모리에 관리해보세요.
-  const message = ''
-  const isPending = false
-  const error = null
+  // useTransition은 어떠한 매개변수도 받지 않음
+  const [isPending, startTransition] = useTransition() // 서버 액션 요청 (로딩 상태 관리, 렌더링)
+  const [message, setMessage] = useState('') // 성공 응답이 왔을 떄 상태 업데이트 -> UI 반영
+  const [error, setError] = useState<undefined | string>(undefined) // 서버에서 실패 응답이 왔을 때 상태 업데이트 -> UI 반영
 
   const itemInput = useInput('')
   const isNotInput = itemInput.props.value.trim().length === 0
 
   // 서버 액션을 클라이언트 핸들러 내부에서 실행하는 코드를 작성하고
   // 응답 성공 또는 실패 상황에 따라 UI 화면을 제공하도록 설정합니다.
-
+  const handleAction = (formData: FormData) => {
+    // startTransition 내에 호출되는 함수는 'Action'이다.
+    // startTransition 안에 들어갈 함수는 이름 뒤에 'Action'을 붙여서 구분한다.
+    // 서버에서 해당 데이터를 처리하기때문에 비동기 함수 사용
+    startTransition(async () => {
+      // 서버 함수를 여기서 실행
+      const result = await createItemAction(formData)
+      if (result.success) {
+        setMessage(result.message ?? '요청이 성공적으로 수행되었습니다.')
+        //서버의 응답 결과가 성공했을때
+      } else {
+        //서버의 응답 결과가 실패했을때
+        setError(result.error ?? '알 수 없는 오류 발생')
+      }
+    })
+  }
   return (
     <div className="flex grow items-center justify-center p-4">
       <div
@@ -65,7 +82,7 @@ export default function ClientSidePage() {
           {!message ? (
             <form
               // 서버 액션을 연결해보세요.
-              // ...
+              action={handleAction}
               className="relative z-10 space-y-4"
               noValidate
             >
