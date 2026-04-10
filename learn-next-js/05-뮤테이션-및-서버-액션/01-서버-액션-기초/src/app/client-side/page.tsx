@@ -25,7 +25,8 @@ export default function ClientSidePage() {
 
   // 서버 액션을 클라이언트 핸들러 내부에서 실행하는 코드를 작성하고
   // 응답 성공 또는 실패 상황에 따라 UI 화면을 제공하도록 설정합니다.
-  const handleAction = (formData: FormData) => {
+  const handleClientAction = (formData: FormData) => {
+    if (isPending || isNotInput) return // 방어적 프로그래밍
     // startTransition 내에 호출되는 함수는 'Action'이다.
     // startTransition 안에 들어갈 함수는 이름 뒤에 'Action'을 붙여서 구분한다.
     // 서버에서 해당 데이터를 처리하기때문에 비동기 함수 사용
@@ -41,6 +42,19 @@ export default function ClientSidePage() {
       }
     })
   }
+  // 입력 폼 초기화 함수
+  const handleReset = () => {
+    // 방법1: 브라우저 API를 사용해 새로고침
+    // window.location.reload()
+
+    // 방법2: 리액트의 방식으로 컴포넌트 초기화
+    setError(undefined)
+    setMessage('')
+    itemInput.methods.reset()
+    // 브라우저에서 시간차를 둬야지만 해당 초첨 대상을 찾기때문에 셋타임아웃이 필요함
+    setTimeout(() => itemInput.methods.focus(), 50)
+  }
+
   return (
     <div className="flex grow items-center justify-center p-4">
       <div
@@ -82,7 +96,13 @@ export default function ClientSidePage() {
           {!message ? (
             <form
               // 서버 액션을 연결해보세요.
-              action={handleAction}
+              // 실제 서버에서 실행되는 액션
+              // form 요소의 action에 연결된 서버 액션 함수는 반환 값이 없어야 한다.
+              // 그러므로 직접적으로 서버 액션을 연결 할 수 없음
+              // action={createItemAction}
+              // action={testCreateItemAction}
+              // 클라이언트 핸들러
+              action={handleClientAction}
               className="relative z-10 space-y-4"
               noValidate
             >
@@ -156,6 +176,7 @@ export default function ClientSidePage() {
                 )}
                 // 폼 초기화 로직을 실행하는 핸들러를 연결해보세요.
                 // ...
+                onClick={handleReset}
               >
                 새로운 아이템 추가
               </button>

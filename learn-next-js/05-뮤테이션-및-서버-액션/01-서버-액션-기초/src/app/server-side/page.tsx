@@ -1,10 +1,29 @@
 import { LucideSend, LucideArrowRight } from 'lucide-react'
 import { cn } from '@/utils'
+import { createItemAction } from '@/server-actions/create-item-action'
+import { redirect } from 'next/navigation'
 
-export default async function ServerSidePage() {
-  
+export default async function ServerSidePage({
+  searchParams,
+}: PageProps<'/server-side'>) {
   // 에러 제어를 위한 변수
-  const error = null 
+  const { error } = await searchParams
+
+  // 인라인 서버 함수 작성
+  // 폼 요소의 action 속성에 연결된 함수 (반환값이 없어야함)
+  const handleInlineServerAction = async (formData: FormData) => {
+    'use server'
+    const result = await createItemAction(formData)
+
+    if (!result.success) {
+      // 에러 상황
+      console.log(result.error)
+      redirect(`?error=${encodeURI(result.error ?? '알 수 없는 오류')}`, 'push')
+    } else {
+      console.log(result.message)
+      redirect('/action-success', 'push')
+    }
+  }
 
   return (
     <div className="flex grow items-center justify-center">
@@ -58,7 +77,9 @@ export default async function ServerSidePage() {
 
         <form
           // 서버 액션을 연결하세요.
-          // ...
+          // 반환값이 있는 이유는 클라이언트 측의 UX 향상
+          // 문제 해결 방법: 인라인 서버 함수 사용하는 것
+          action={handleInlineServerAction}
           className="relative z-10 space-y-4"
         >
           <input

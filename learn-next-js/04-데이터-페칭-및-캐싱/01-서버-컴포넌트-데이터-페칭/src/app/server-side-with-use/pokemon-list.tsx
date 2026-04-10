@@ -11,7 +11,8 @@ export function PokemonList({
 }: {
   pokemonPromise: Promise<Response>
 }) {
-  // 전달된 Promise가 resolved 된 후, 데이터로 렌더링만 신경쓰면 됩니다.
+  // 서버 컴포넌트에서 전달된 Promise가 resolved 된 후,
+  // 클라이언트 컴포넌트는 데이터로 렌더링만 신경쓰면 됩니다.
   const data = use(pokemonPromise) as unknown as Pokemon[]
 
   return (

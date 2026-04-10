@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function PokemonView({ pokemonsPromise }: Props) {
-  const pokemons = use(pokemonsPromise)
+  const pokemons = use(pokemonsPromise) // 클라이언트 컴포넌트여서 비동기 사용할 수 없으므로, use함수 사용
   return (
     <>
       <PokemonList data={pokemons} />
