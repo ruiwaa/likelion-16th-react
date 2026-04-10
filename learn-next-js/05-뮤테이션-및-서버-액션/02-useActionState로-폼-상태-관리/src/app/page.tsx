@@ -1,6 +1,7 @@
 import { LucideMousePointer2, LucideZap } from 'lucide-react'
 import LinkCard from '@/components/ui/link-card'
 import { cn } from '@/utils'
+// import UnderstandReducerPage from './understand-reducer/page'
 
 export default function MainPage() {
   return (
@@ -8,10 +9,10 @@ export default function MainPage() {
       <section
         className={cn(
           'grid grid-cols-1 gap-8 md:grid-cols-2',
-          'mx-auto w-full max-w-4xl p-6 md:p-0'
+          'mx-auto w-full max-w-4xl p-6 md:p-0',
         )}
       >
-        {/* 
+        {/*
           useActionState를 활용한 폼 처리
           - 특징: 서버 액션의 결과(결과 데이터, 에러)를 훅을 통해 직접 수신
           - UI 피드백: 'isPending' 상태를 활용해 버튼 비활성화 및 로딩 스피너 표시 가능
@@ -24,7 +25,7 @@ export default function MainPage() {
           icon={LucideMousePointer2}
         />
 
-        {/* 
+        {/*
           전통적인 서버 사이드 방식과의 비교
           - 서버 컴포넌트 환경에서의 URL(searchParams)에 의존하는 무상태(Stateless) 방식
         */}
@@ -38,5 +39,6 @@ export default function MainPage() {
         />
       </section>
     </div>
+    // <UnderstandReducerPage/>
   )
 }
