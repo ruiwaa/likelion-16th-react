@@ -62,6 +62,7 @@ function CreateActionForm({ onReset }: CreateActionFormProps) {
   const [state, dispatchAction, isPending] = useActionState(
     createItemAction, // 서버 액션 (리듀서 액션 함수)
     INITIAL_FORM_STATE, // 폼 초기 상태
+    '/client-side', //퍼머링크
   )
 
   const itemInput = useInput('')
