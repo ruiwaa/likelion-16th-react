@@ -1,5 +1,5 @@
-import { type ComponentProps, useId } from "react"
-import { cn } from "@/utils"
+import { type ComponentProps, useId } from 'react'
+import { cn } from '@/utils'
 
 export function PostTextarea({
   label,
@@ -9,7 +9,7 @@ export function PostTextarea({
   const textareaId = useId()
 
   return (
-    <div className="flex flex-col space-y-2">
+    <div className="flex flex-col gap-2 space-y-2">
       <label
         htmlFor={textareaId}
         className="ml-1 text-sm font-bold tracking-wider text-slate-500 uppercase"
@@ -21,7 +21,7 @@ export function PostTextarea({
         rows={4}
         {...restProps}
         className={cn(
-          'w-full resize-y min-h-30 max-h-50',
+          'max-h-50 min-h-30 w-full resize-y',
           'rounded-2xl border border-slate-200 bg-slate-50/50 px-5 py-3.5 outline-none',
           'focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10',
           'placeholder:text-slate-300',

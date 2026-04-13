@@ -1,14 +1,8 @@
 import { LucideAlertCircle, CheckCircle2 } from 'lucide-react'
 import { cn } from '@/utils'
-
-interface FormState {
-  success: boolean
-  message: string
-  errors: string
-}
+import { type FormState } from '@/actions/post-actions'
 
 export function ValidateStatus({ state }: { state?: FormState }) {
-  
   /**
    * [에러 상태 렌더링]
    * 검증에 실패하고(success: false) 가공된 에러 메시지(errors)가 있을 때 표시합니다.
@@ -25,7 +19,7 @@ export function ValidateStatus({ state }: { state?: FormState }) {
             <LucideAlertCircle size={18} />
             <p className="text-sm font-bold">{state.message}</p>
           </div>
-          
+
           <pre
             className={cn(
               'rounded-xl border border-red-100/50 bg-white/50 p-3',
@@ -58,7 +52,7 @@ export function ValidateStatus({ state }: { state?: FormState }) {
     )
   }
 
-  // 초기 상태이거나 메시지가 없을 경우 
+  // 초기 상태이거나 메시지가 없을 경우
   // 아무것도 렌더링하지 않음
   return null
 }
