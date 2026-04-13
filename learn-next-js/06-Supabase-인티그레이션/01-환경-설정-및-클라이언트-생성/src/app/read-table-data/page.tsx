@@ -1,3 +1,5 @@
+
+
 import {
   LucideDatabase,
   LucideAlertCircle,
@@ -11,21 +13,35 @@ import {
 import Link from 'next/link'
 
 import { cn } from '@/utils'
+import { createClient } from '@/lib/supabase/server'
+import { cookies } from 'next/headers'  
 
 interface Memo {
-  id: string | number
+  id: string 
   title: string
   content: string
-  created_at: Date | string
+  created_at: string
+  updated_at: string
 }
 
+// interface snack{
+//   id:string
+//   title:string
+//   content: string
+//   created_at: string
+// }
 export default async function ReadTableDataPage() {
  
-  // Supabase 데이터베이스 memos 테이블에서 데이터 조회
-  const supabase = null
-  const data = [] as Memo[]
-  const error = null as unknown as Error
+  // Supabase 데이터베이스 memolist 테이블에서 데이터 조회(Read)
+  const cookieStore = await cookies()
+  const supabase = createClient(cookieStore)
+  const {error, data: memos} = await supabase.from('memolist').select('*').order('created_at', {ascending: false}).limit(9)  // 최신순 정렬
+  // const {error, data: snacks} = await supabase.from('goorumFavoriteSnack').select('title, created_at').order('created_at', {ascending: false}).limit(9)  // 최신순 정렬
 
+  const data = memos as Memo[]
+  // const data = snacks as snack[]
+
+ 
   return (
     <section
       className={cn(
@@ -56,7 +72,7 @@ export default async function ReadTableDataPage() {
           </div>
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-              메모 데이터베이스
+             구름이의 최애 간식 기록 
             </h1>
             <p className="mt-1 text-sm text-slate-500">
               Supabase{' '}
