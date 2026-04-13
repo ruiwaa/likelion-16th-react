@@ -5,14 +5,13 @@ import {
   ArrowRight,
 } from 'lucide-react'
 import { cn } from '@/utils'
-import { validateUser } from './validate-user'
+import { User, validateUser } from './validate-user-zod'
 
 export default function ZodGuidePage() {
-  
   // 유효성 검증할 데이터
   const users = [
     {
-      name: '박주아',
+      name: '박주아', // 이름은 문자값이어야 합니다. 이름은 2글자 이상되어야 합니다.
       age: 23,
       job: '프론트엔드 개발자',
       email: 'park@jua.com',
@@ -22,7 +21,7 @@ export default function ZodGuidePage() {
     },
     {
       name: '윤',
-      age: 62,
+      age: 60,
       job: '백엔드 개발자',
       email: 'kim.yun',
       phoneNumber: '9876-5432',
@@ -31,8 +30,13 @@ export default function ZodGuidePage() {
     },
   ]
 
-  users.forEach((user) => console.log(validateUser(user)))
-  
+  // 선언된 스키마를 사용해 값의 유효성 검사
+  // - 유효한 경우, success: true, 유효한 데이터 반환
+  // - 유효하지 않은 경우, success: false, 오류 메시지 반환
+  // console.log(UserSchema.parse(someValue))
+
+  // validateUser 함수를 사용해 검증
+  users.forEach((user) => console.log(validateUser(user as User)))
 
   return (
     <section
