@@ -1,24 +1,35 @@
-import { use } from 'react'
+'use client'
 
-import { Memo } from '@/actions/memo-actions'
+import { use } from 'react'
+import { toast } from 'sonner'
+
 import MemoItem from './memo-item'
+import type { ActionResponse, Memo } from '@/actions/memo-actions'
+
 
 interface Props {
-  memosPromise: Promise<Memo[]>
+  memolistPromise: Promise<ActionResponse<Memo[]>>
 }
 
-export default function MemoList({ memosPromise }: Props) {
-  const memos = use(memosPromise)
+export default function MemoList({ memolistPromise }: Props) {
+  
+  const result = use(memolistPromise)
 
-  return (
-    <article className="space-y-4">
-      <h3 className="px-2 text-sm font-bold tracking-tight text-slate-400 uppercase">
-        메모 목록 ({memos?.length || 0})
-      </h3>
+  if (!result.success) {
+    toast.error(result.error)
+  } else {
+    const memolist = result.data
 
-      {memos?.map((memo) => (
-        <MemoItem key={memo.id} memo={memo} />
-      ))}
-    </article>
-  )
+    return (
+      <article className="space-y-4">
+        <h3 className="px-2 text-sm font-bold tracking-tight text-slate-400">
+          메모 목록 ({memolist?.length || 0})
+        </h3>
+
+        {memolist?.map((memo) => (
+          <MemoItem key={memo.id} memo={memo} />
+        ))}
+      </article>
+    )
+  }
 }

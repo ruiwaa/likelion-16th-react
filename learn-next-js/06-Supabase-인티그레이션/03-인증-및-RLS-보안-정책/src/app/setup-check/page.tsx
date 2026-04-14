@@ -7,16 +7,16 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 
-import { supabaseConfig } from '@/lib/supabase/config'
-import { createClient } from '@/lib/supabase/server'
 import { cn, isErrorObject } from '@/utils'
+import { supabaseConfig } from '@/lib/supabase/config'
+import { createSupabase } from '@/lib/supabase/helpers'
 
 export default async function SetupCheckPage() {
   let isConnected = false
   let errorMessage = ''
 
   try {
-    const supabase = await createClient()
+    const supabase = await createSupabase()
     const { error } = await supabase.auth.getSession()
     if (error) throw error
     isConnected = true
@@ -121,7 +121,7 @@ function CheckConnectSupabase({
             </span>
           </li>
           <li className="flex items-center justify-between border-b border-slate-50 pb-2.5 text-sm font-semibold">
-            <span className="text-slate-600">NEXT_PUBLIC_SUPABASE_ANON_KEY</span>
+            <span className="text-slate-600">NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</span>
             <span className={cn(
               "flex items-center",
               supabaseConfig.key ? "text-emerald-600" : "text-rose-500"
