@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Noto_Sans_KR, Geist } from 'next/font/google'
-
+import {Toaster} from 'sonner'
 import { cn } from '@/utils'
 import { Navbar } from '@/components/ui/navbar'
 import Footer from '@/components/ui/footer'
@@ -28,6 +28,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
           'flex flex-col bg-white font-sans text-slate-900 antialiased',
         )}
       >
+      
         <Navbar />
         <main
           className={cn(
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
           )}
         >
           {children}
+          <Toaster/>
         </main>
         <Footer />
       </body>

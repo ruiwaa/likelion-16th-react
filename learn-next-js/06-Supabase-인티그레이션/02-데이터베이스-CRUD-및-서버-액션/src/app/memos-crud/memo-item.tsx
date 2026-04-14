@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { startTransition, useState} from 'react'
 import {
   LucideStickyNote,
   LucideCalendar,
@@ -11,10 +11,11 @@ import {
 } from 'lucide-react'
 
 import { cn } from '@/utils'
-import { Memo } from '@/actions/memo-actions'
+import { deleteMemoAction, updateMemoAction, type Memo } from '@/actions/memo-actions'
+import { toast } from 'sonner'
 
 interface Props {
-  memo?: Memo
+  memo: Memo
 }
 
 export default function MemoItem({ memo }: Props) {
@@ -22,21 +23,34 @@ export default function MemoItem({ memo }: Props) {
   const [title, setTitle] = useState(memo?.title)
   const [content, setContent] = useState(memo?.content)
 
+
   /**
    * updateMemoAction 서버 액션을 정의합니다.
    * 서버 액션을 사용해 수정한 후, 화면을 즉시 업데이트합니다.
    */
-  const updateMemo = async () => {
-    console.log('메모 수정 기능')
+const updateMemo = () => {
+  console.log('메모 수정 기능')
+
+  startTransition(async () => {
+    const result = await updateMemoAction(memo.id, { title, content })
+      if(!result.success)toast.error(result.error)
+      else toast.success('메모 수정에 성공했습니다.')
     setIsEditing(false) // 에디트 모드 OFF
-  }
+  })
+
+}
 
   /**
    * deleteMemoAction 서버 액션을 정의합니다.
    * 서버 액션을 사용해 수정한 후, 화면을 즉시 업데이트합니다.
    */
-  const deleteMemo = () => {
-    console.log('메모 삭제 기능')
+  const deleteMemo = (memoId:Memo['id']) => {
+   
+    startTransition(async () => {{
+      const result = await deleteMemoAction(memoId)
+      if(!result.success)toast.error(result.error)
+      else toast.success('메모 삭제에 성공했습니다.')
+    }})
   }
 
   return (
@@ -129,7 +143,7 @@ export default function MemoItem({ memo }: Props) {
               <button
                 type="button"
                 aria-label="삭제"
-                onClick={() => deleteMemo()}
+                onClick={() => deleteMemo(memo.id)}
                 className="cursor-pointer rounded-lg p-2 text-slate-300 hover:bg-rose-50 hover:text-rose-500"
               >
                 <LucideTrash2 className="size-5" />

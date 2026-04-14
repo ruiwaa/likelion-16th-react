@@ -1,6 +1,14 @@
-import { createMemoAction } from "@/actions/memo-actions";
+import { redirect } from 'next/navigation'
 
-export default function MemoForm() {
+import { createMemoAction } from '@/actions/memo-actions'
+
+export default async function MemoForm({ errorMessage }:  { errorMessage?: string | string[] }) {
+
+
+  // 오류 원인: 일반 서버 컴포넌트 (페이지 컴포넌트가 아님. 검색 매개변수 못 읽음)
+  // 오류 해결 방법
+  // 1. 서버 컴포넌트: 부모(페이지) 컴포넌트 -> 폼 컴포넌트 error prop 전달 ✅
+  // 2. 클라이언트 컴포넌트화 (useSearchParams 훅)
 
   /**
    * createMemoAction 서버 액션을 정의합니다.
@@ -9,8 +17,23 @@ export default function MemoForm() {
    * 클라이언트 컴포넌트에서 각 필드마다 에러 메시지를 표시하도록 구성합니다.
    */
 
+  // 인라인 서버 액션 (Server Action)
+  const handleAction = async (formData: FormData) => {
+    'use server'
+
+    const result = await createMemoAction(formData)
+
+    if (!result.success) {
+      // Next.js의 서버 함수
+      // 페이지 리디렉션(redirection)
+      redirect(`?error=${encodeURIComponent(result.error)}`)
+    } else {
+      redirect('/memos-crud')
+    }
+  }
+
   return (
-    <form className="flex flex-col gap-3" action={createMemoAction}>
+    <form action={handleAction} className="flex flex-col gap-3">
       <input
         type="text"
         name="title"
@@ -29,10 +52,15 @@ export default function MemoForm() {
       />
       <button
         type="submit"
-        className="rounded-xl bg-slate-900 py-2.5 font-bold text-white"
+        className="cursor-pointer rounded-xl bg-slate-900 py-2.5 font-bold text-white"
       >
         메모 저장
       </button>
+      {errorMessage && errorMessage.length > 0 && (
+        <p role="alert" className="font-medium text-red-700 px-3 py-1">
+          {decodeURIComponent(errorMessage?.toString())}
+        </p>
+      )}
     </form>
   )
 }

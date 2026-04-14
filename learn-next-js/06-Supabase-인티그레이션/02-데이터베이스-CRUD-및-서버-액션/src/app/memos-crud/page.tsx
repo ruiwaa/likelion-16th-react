@@ -4,13 +4,16 @@ import MemoList from './memo-list'
 import { Suspense } from 'react'
 import { Spinner } from '@/components/ui/spinner'
 
-export default function MemoCRUDPage() {
-
+export default async function MemoCRUDPage({searchParams}:PageProps<'/memos-crud'>) {
+  const {limit:limitParam, error} = await searchParams
   /**
    * readMemoAction 서버 액션을 정의합니다. (Supabase 데이터 가져오기)
    * readMemoAction 액션를 실행한 Promise를 MemoList 컴포넌트에 전달합니다.
    */
-  const memolistPromise = readMemoAction() // Promise<Memo[]>
+  const limit = Number(limitParam)
+  const limitNumber = Number.isNaN(Number(limit)) ? undefined : limit
+ const memolistPromise = readMemoAction(limitNumber)
+
   
   return (
     <section className="mx-auto w-9/10 max-w-3xl px-6 py-12 antialiased lg:w-3/5">
@@ -26,11 +29,11 @@ export default function MemoCRUDPage() {
       </header>
             
       <div className="mb-12 rounded-3xl border-2 border-slate-100 bg-slate-50/50 p-6">
-        <MemoForm />
+        <MemoForm  errorMessage ={error}/>
       </div>
- <Suspense fallback={<Spinner/>}>
+      <Suspense fallback={<Spinner/>}>
       <MemoList memolistPromise={memolistPromise} />
- </Suspense>
+      </Suspense>
 
     </section>
   )
