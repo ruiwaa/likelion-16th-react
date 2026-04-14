@@ -1,6 +1,8 @@
 import { readMemoAction } from '@/actions/memo-actions'
 import MemoForm from './memo-form'
 import MemoList from './memo-list'
+import { Suspense } from 'react'
+import { Spinner } from '@/components/ui/spinner'
 
 export default function MemoCRUDPage() {
 
@@ -26,8 +28,9 @@ export default function MemoCRUDPage() {
       <div className="mb-12 rounded-3xl border-2 border-slate-100 bg-slate-50/50 p-6">
         <MemoForm />
       </div>
-
+ <Suspense fallback={<Spinner/>}>
       <MemoList memolistPromise={memolistPromise} />
+ </Suspense>
 
     </section>
   )

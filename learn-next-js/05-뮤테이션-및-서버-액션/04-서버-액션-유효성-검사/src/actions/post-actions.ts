@@ -41,9 +41,7 @@ export const createPostAction = async (
 ): Promise<FormState> => {
   await wait(1000)
 
-  // const title = formData.get('title')?.toString()
-  // const content = formData.get('content')?.toString()
-
+ 
   const rawFormData = Object.fromEntries(formData)
   // { title: '...', content: '...' }
 
