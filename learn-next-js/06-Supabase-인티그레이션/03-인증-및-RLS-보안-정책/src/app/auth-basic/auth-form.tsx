@@ -27,6 +27,7 @@ export function AuthForm({ mode }: AuthFormProps) {
     null,
   )
 
+  
   return (
     <article className="rounded-[40px] border-2 border-slate-100 bg-white p-10 shadow-sm">
       <Header isSignIn={isSignIn} />
